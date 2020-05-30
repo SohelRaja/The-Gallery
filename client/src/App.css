@@ -1,3 +1,23 @@
 .mynavbar a{
-    color: black !important;
+    color: #5e35b1 !important;
+}
+.mycard{
+    margin-top: 30px;
+}
+.auth-card{
+    padding: 20px;
+    max-width: 400px;
+    text-align: center;
+    margin: 10px auto;
+}
+.auth-card h2{
+    color: #5e35b1;
+}
+.input-field input[type=text]:focus {
+    border-bottom: 1px solid #5e35b1 !important;
+    box-shadow: 0 1px 0 0 #5e35b1 !important;
+}
+.sign-link a{
+    color: #5e35b1;
+    text-decoration: underline;
 }
