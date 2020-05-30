@@ -22,8 +22,13 @@ module.exports = (req,res,next)=>{
         const {_id} = payload;
         User.findById(_id)
         .then((userData)=>{
-            req.user = userData
+            userData = {
+                _id: userData._id,
+                email: userData.email,
+                name: userData.name
+            }
+            req.user = userData;
+            next();
         });
-        next();
     });
 }
