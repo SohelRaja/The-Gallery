@@ -7,7 +7,7 @@ const router = express.Router();
 const Post = mongoose.model('Post');
 
 router.get('/allpost',(req,res)=>{
-    Post.find()
+    Post.find({privacy: "public"})
     .populate("postedBy", "_id name")
     .then((posts)=>{
         res.json({posts})

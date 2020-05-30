@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         default: "no photo"
     },
+    privacy: {
+        type: String,
+        default: "public"
+    },
     postedBy: {
         type: ObjectId,
         ref: "User"
