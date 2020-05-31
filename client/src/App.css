@@ -21,3 +21,31 @@
     color: #5e35b1;
     text-decoration: underline;
 }
+.profile{
+    max-width: 550px;
+    margin: 0px auto;
+}
+.profile-card{
+    display: flex;
+    justify-content: space-around;
+    margin: 18px 0px;
+    border-bottom: 1px solid #5e35b1;
+}
+.profile-pic{
+    width: 160px;
+    height: 160px;
+    border-radius: 80px;
+}
+.profile-sub-info{
+    display: flex;
+    justify-content: space-between;
+    width: 108%;
+}
+.profile-gallery{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.profile-gallery .profile-gallery-item{
+    width: 30%;
+}
