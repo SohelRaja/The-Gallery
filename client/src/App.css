@@ -21,6 +21,27 @@
     color: #5e35b1;
     text-decoration: underline;
 }
+
+.post-card{
+    padding: 20px;
+    max-width: 500px;
+    text-align: center;
+    margin: 30px auto;
+}
+.post-card h2{
+    color: #5e35b1;
+}
+.privacy-button{
+    display: flex;
+    justify-content: space-around;
+}
+[type="radio"].with-gap:checked+span:before, [type="radio"].with-gap:checked+span:after {
+    border: 2px solid #5e35b1;
+}
+[type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
+    background-color: #5e35b1;
+}
+
 .profile{
     max-width: 550px;
     margin: 0px auto;
