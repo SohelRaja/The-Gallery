@@ -49,3 +49,29 @@
 .profile-gallery .profile-gallery-item{
     width: 30%;
 }
+
+.home-card{
+    max-width: 500px;
+    height: max-content;
+    margin: 26px auto;
+}
+.home-card-heading{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    margin-left: 10px;
+    padding: 10px;
+}
+.home-card-heading img{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 3px solid #5e35b1;
+    display: flex;
+    align-items: center;
+}
+.home-card-title{
+    margin: 0;
+    margin-left: 15px;
+    color: #5e35b1;
+}
