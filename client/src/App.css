@@ -1,6 +1,7 @@
 .mynavbar a{
     color: #5e35b1 !important;
 }
+/* Auth page style */
 .mycard{
     margin-top: 30px;
 }
@@ -21,7 +22,7 @@
     color: #5e35b1;
     text-decoration: underline;
 }
-
+/* Post page style */
 .post-card{
     padding: 20px;
     max-width: 500px;
@@ -41,7 +42,7 @@
 [type="radio"]:checked+span:after, [type="radio"].with-gap:checked+span:after {
     background-color: #5e35b1;
 }
-
+/* Profile page style */
 .profile{
     max-width: 550px;
     margin: 0px auto;
@@ -70,7 +71,7 @@
 .profile-gallery .profile-gallery-item{
     width: 30%;
 }
-
+/* Home Page Style */
 .home-card{
     max-width: 500px;
     height: max-content;
@@ -95,4 +96,10 @@
     margin: 0;
     margin-left: 15px;
     color: #5e35b1;
+}
+/* Materialize Style */
+#toast-container{
+    top: 30px !important;
+    right: 30px !important;
+    left: auto !important;
 }
