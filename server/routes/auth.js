@@ -22,7 +22,7 @@ router.post('/signup',(req,res)=>{
             error: "Please add all the fields."
         })
     }
-    if(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)){
+    if(!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)){
         return res.status(422).json({
             error: "Invalid email."
         });
