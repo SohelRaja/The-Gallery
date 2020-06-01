@@ -1,6 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState, useContext} from 'react';
+import { Link } from 'react-router-dom';
+
+import {UserContext} from '../../App';
 
 const Profile = () => {
+    const [mypics,setPics] = useState([]);
+    const {state, dispatch} = useContext(UserContext);
+    useEffect(()=>{
+        fetch('/mypost',{
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then((result)=>{
+            setPics(result.myposts);
+        }).catch(err=>{
+            console.log(err);
+        });
+    },[]);
+
     return (
         <div className="profile">
             <div className="profile-card">
@@ -8,7 +26,7 @@ const Profile = () => {
                     <img className="profile-pic" src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="profile-pic" />
                 </div>
                 <div className="profile-info">
-                    <h4>Sohel Raja</h4>
+                    <h4>{state? state.name : "loading..."}</h4>
                     <div className="profile-sub-info">
                         <h6>100 posts</h6>
                         <h6>100 followers</h6>
@@ -16,15 +34,30 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-            <div className="profile-gallery">
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />
-                <img className="profile-gallery-item" src="https://images.unsplash.com/photo-1437356934129-02f4dc0872ae?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="gallery-pic" />    
+            <div className="row profile-gallery">
+                {
+                    mypics.map(item=>{
+                        return(
+                            <div class="col s12 m6 profile-gallery-item" key={item._id}>
+                                <div className="card">
+                                    <div className="card-image">
+                                        <Link><img src={item.photo} alt={item.title} /></Link>
+                                        <Link>
+                                            <span className="card-title">
+                                                {item.title.length > 20 ? item.title.substring(0,20):item.title.substring(0,item.title.length)}{item.title.length > 20?"...":""}
+                                            </span>
+                                        </Link>
+                                        <Link>{item.privacy==="private"? <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"><i className="material-icons">lock</i></span>:""}</Link>
+                                        <Link className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></Link>
+                                    </div>
+                                    <div class="card-content">
+                                        <p>{item.body.length > 30 ? item.body.substring(0,30):item.body.substring(0,item.body.length)}{item.body.length > 30?"...":""}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        );
+                    })
+                }
             </div>
         </div>
     );
