@@ -22,6 +22,11 @@ router.post('/signup',(req,res)=>{
             error: "Please add all the fields."
         })
     }
+    if(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)){
+        return res.status(422).json({
+            error: "Invalid email."
+        });
+    }
     User.findOne({email:email})
         .then((savedUser)=>{
             if(savedUser){
@@ -68,6 +73,11 @@ router.post('/signin', (req,res)=>{
             error: "Please provide email or password."
         });
     }
+    if(!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)){
+        return res.status(422).json({
+            error: "Invalid email."
+        });
+    }
     User.findOne({
         email: email
     })
@@ -84,7 +94,8 @@ router.post('/signin', (req,res)=>{
                 //     message: "Successfully signed in."
                 // });
                 const token = jwt.sign({_id: savedUser._id}, JWT_SECRET);
-                res.json({token});
+                const {_id, name, email} = savedUser;
+                res.json({token: token, user: {_id, name, email}});
             }else{
                 return res.status(422).json({
                     error: "Invalid email or password."
