@@ -18,6 +18,11 @@
     border-bottom: 1px solid #5e35b1 !important;
     box-shadow: 0 1px 0 0 #5e35b1 !important;
 }
+.valid{
+    border-bottom: 1px solid #5e35b1 !important;
+    box-shadow: 0 1px 0 0 #5e35b1 !important;
+    color: #5e35b1 !important;
+}
 .sign-link a{
     color: #5e35b1;
     text-decoration: underline;

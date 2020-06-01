@@ -19,7 +19,8 @@ const Signin = () => {
             })
         }).then(res=>res.json())
         .then((data)=>{
-            console.log(data);
+            localStorage.setItem("jwt", data.token);
+            localStorage.setItem("user", JSON.stringify(data.user));
             if(data.error){
                 M.toast({html: data.error, classes: "#f44336 red"});
             }else{
