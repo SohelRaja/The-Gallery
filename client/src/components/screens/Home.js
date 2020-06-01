@@ -8,9 +8,9 @@ const Home = () => {
                     <div>
                         <img src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="home-profile-pic"/>
                     </div>
-                    <dic>
+                    <div>
                         <h5 className="home-card-title">Sohel Raja</h5>
-                    </dic>
+                    </div>
                 </div>
                 <div className="card-image">
                     <img src="https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="pic" />
@@ -28,9 +28,9 @@ const Home = () => {
                     <div>
                         <img src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="home-profile-pic"/>
                     </div>
-                    <dic>
+                    <div>
                         <h5 className="home-card-title">Sohel Raja</h5>
-                    </dic>
+                    </div>
                 </div>
                 <div className="card-image">
                     <img src="https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="pic" />
@@ -47,9 +47,9 @@ const Home = () => {
                     <div>
                         <img src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="home-profile-pic"/>
                     </div>
-                    <dic>
+                    <div>
                         <h5 className="home-card-title">Sohel Raja</h5>
-                    </dic>
+                    </div>
                 </div>
                 <div className="card-image">
                     <img src="https://images.unsplash.com/photo-1477346611705-65d1883cee1e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60" alt="pic" />
