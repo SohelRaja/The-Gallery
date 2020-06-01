@@ -41,7 +41,7 @@ const CreatePost = () =>{
                 console.log(err);
             });
         }
-    },[url]);
+    },[url,title,body,image,privacy,history]);
 
     const postDetails = () =>{
         const data = new FormData();
