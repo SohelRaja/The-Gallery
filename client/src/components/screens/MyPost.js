@@ -23,6 +23,7 @@ export default class MyPost extends Component{
                     <img src={data.photo} alt={data.title} />
                 </div>
                 <div className="card-content">
+                    <h6><b>{data.likes.length} likes </b></h6>
                     <h5>{data.body}</h5>
                     {/* <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1">
                     Edit
