@@ -13,7 +13,7 @@ const Home = () => {
         }).then(res=>res.json())
         .then((result)=>{
             setData(result.posts);
-            console.log(result)
+            // console.log(result)
         }).catch(err=>{
             console.log(err);
         });
