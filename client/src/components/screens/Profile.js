@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import {UserContext} from '../../App';
 
 const Profile = () => {
-    const [mypics,setPics] = useState([]);
+    const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     useEffect(()=>{
         fetch('/mypost',{
@@ -13,12 +13,12 @@ const Profile = () => {
             }
         }).then(res=>res.json())
         .then((result)=>{
-            setPics(result.myposts);
+            setPosts(result.myposts);
+            localStorage.setItem("post", JSON.stringify(result.myposts));
         }).catch(err=>{
             console.log(err);
         });
     },[]);
-
     return (
         <div className="profile">
             <div className="profile-card">
@@ -36,21 +36,21 @@ const Profile = () => {
             </div>
             <div className="row profile-gallery">
                 {
-                    mypics.map(item=>{
+                    myposts.map(item=>{
                         return(
-                            <div class="col s12 m6 profile-gallery-item" key={item._id}>
+                            <div className="col s12 m6 profile-gallery-item" key={item._id}>
                                 <div className="card">
                                     <div className="card-image">
-                                        <Link><img src={item.photo} alt={item.title} /></Link>
-                                        <Link>
+                                        <Link to={`/mypost/${item._id}`}><img src={item.photo} alt={item.title} /></Link>
+                                        <Link to={`/mypost/${item._id}`}>
                                             <span className="card-title">
                                                 {item.title.length > 20 ? item.title.substring(0,20):item.title.substring(0,item.title.length)}{item.title.length > 20?"...":""}
                                             </span>
                                         </Link>
-                                        <Link>{item.privacy==="private"? <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"><i className="material-icons">lock</i></span>:""}</Link>
-                                        <Link className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></Link>
+                                        <Link to={`/mypost/${item._id}`}>{item.privacy==="private"? <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"><i className="material-icons">lock</i></span>:""}</Link>
+                                        <Link to="/" className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></Link>
                                     </div>
-                                    <div class="card-content">
+                                    <div className="card-content">
                                         <p>{item.body.length > 30 ? item.body.substring(0,30):item.body.substring(0,item.body.length)}{item.body.length > 30?"...":""}</p>
                                     </div>
                                 </div>

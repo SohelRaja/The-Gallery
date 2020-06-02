@@ -92,6 +92,12 @@
 .profile-lock i{
     color: #5e35b1 !important;
 }
+/* My post Style */
+.my-post-lock{
+    position: absolute !important;
+    right: 24px !important;
+    top: 20px !important;
+}
 /* Home Page Style */
 .home-card{
     max-width: 500px;
