@@ -119,7 +119,7 @@
     display: flex;
     align-items: center;
 }
-.home-card-title{
+.home-card-title a{
     margin: 0;
     margin-left: 15px;
     color: #5e35b1;

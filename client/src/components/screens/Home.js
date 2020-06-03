@@ -1,4 +1,5 @@
 import React,{useState, useEffect, useContext} from 'react';
+import {Link} from 'react-router-dom';
 
 import {UserContext} from './../../App';
 
@@ -96,7 +97,7 @@ const Home = () => {
         });
     }
     const deletePost = (postId)=>{
-        fetch(`/deletepost/:${postId}`,{
+        fetch(`/deletepost/${postId}`,{
             method: "delete",
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt") 
@@ -122,7 +123,7 @@ const Home = () => {
                                 </div>
                                 <div>
                                     <h5 className="home-card-title">
-                                        {item.postedBy.name}
+                                        <Link to={item.postedBy._id == state._id ? "/profile" : `/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
                                         {item.postedBy._id == state._id &&
                                             <i className="material-icons delete-icon"
                                                 onClick={()=>deletePost(item._id)}
