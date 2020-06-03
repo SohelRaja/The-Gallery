@@ -17,6 +17,19 @@ router.get('/allpost', requireLogin, (req,res)=>{
         console.log(err);
     })
 });
+
+router.get('/subpost', requireLogin, (req,res)=>{
+    Post.find({postedBy: {$in: req.user.following}, privacy: "public"})
+    .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .then((posts)=>{
+        res.json({posts})
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+});
+
 router.post('/createpost', requireLogin, (req,res)=>{
     const {title, body, pic, privacy} = req.body;
     // console.log(title, body, pic, privacy)
