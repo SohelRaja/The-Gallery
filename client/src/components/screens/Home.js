@@ -95,6 +95,21 @@ const Home = () => {
             console.log(err);
         });
     }
+    const deletePost = (postId)=>{
+        fetch(`/deletepost/:${postId}`,{
+            method: "delete",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt") 
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            console.log(result)
+            const newData = data.filter(item=>{
+                return item._id !== result._id
+            })
+            setData(newData)
+        })
+    }
     return (
         <div className="home">
             {
@@ -106,7 +121,14 @@ const Home = () => {
                                     <img src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="home-profile-pic"/>
                                 </div>
                                 <div>
-                                    <h5 className="home-card-title">{item.postedBy.name}</h5>
+                                    <h5 className="home-card-title">
+                                        {item.postedBy.name}
+                                        {item.postedBy._id == state._id &&
+                                            <i className="material-icons delete-icon"
+                                                onClick={()=>deletePost(item._id)}
+                                            >delete</i>
+                                        }
+                                    </h5>
                                 </div>
                             </div>
                             <div className="card-image">
@@ -122,7 +144,7 @@ const Home = () => {
                                         }}
                                     >favorite</i>
                                     : 
-                                    <i className="material-icons"
+                                    <i className="material-icons love-icon-unlike"
                                         onClick={()=>{
                                             likePost(item._id)
                                         }}

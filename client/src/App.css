@@ -130,6 +130,19 @@ input[type=text]:focus {
 }
 .love-icon{
     color: #e53935 !important;
+    cursor: pointer;
+    font-size: 35px;
+}
+.love-icon-unlike{
+    cursor: pointer;
+    font-size: 35px;
+}
+.delete-icon{
+    color: #e53935 !important;
+    position: absolute !important;
+    right: 24px !important;
+    top: 20px !important;
+    cursor: pointer;
 }
 /* Materialize Style */
 #toast-container{

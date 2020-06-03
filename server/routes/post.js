@@ -19,7 +19,7 @@ router.get('/allpost', requireLogin, (req,res)=>{
 });
 router.post('/createpost', requireLogin, (req,res)=>{
     const {title, body, pic, privacy} = req.body;
-    console.log(title, body, pic, privacy)
+    // console.log(title, body, pic, privacy)
     if(!title || !body || !pic || !privacy){
         return res.status(422).json({
             error: "Please add all the fields."
@@ -98,4 +98,21 @@ router.put('/comment',requireLogin,(req,res)=>{
         }
     })
 });
+router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
+    Post.findById(req.params.postId)
+    .populate("postedBy","_id")
+    .exec((err,post)=>{
+        if(err || !post){
+            return res.status(422).json({error:err})
+        }
+        if(post.postedBy._id.toString() === req.user._id.toString()){
+              post.delete()
+              .then(result=>{
+                  res.json(result)
+              }).catch(err=>{
+                  console.log(err)
+              })
+        }
+    })
+})
 module.exports = router;
