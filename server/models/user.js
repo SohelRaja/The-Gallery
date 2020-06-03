@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+const {DEFAULT_PIC} = require('../keys');
+
 const {ObjectId} = mongoose.Schema.Types;
 
 const userSchema = new mongoose.Schema({
@@ -14,6 +16,10 @@ const userSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true
+    },
+    pic:{
+        type: String,
+        default: DEFAULT_PIC
     },
     followers: [{type: ObjectId, ref: "User"}],
     following: [{type: ObjectId, ref: "User"}]

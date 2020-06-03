@@ -23,7 +23,7 @@ const Profile = () => {
         <div className="profile">
             <div className="profile-card">
                 <div>
-                    <img className="profile-pic" src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="profile-pic" />
+                    <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
                 </div>
                 <div className="profile-info">
                     <h4>{state? state.name : "loading..."}</h4>

@@ -83,7 +83,7 @@ const Home = () => {
             })
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result);
+            // console.log(result);
             const newData = data.map(item=>{
                 if(item._id === result._id){
                     return result;
@@ -119,7 +119,7 @@ const Home = () => {
                         <div className="card home-card" key={item._id}>
                             <div className="home-card-heading">
                                 <div>
-                                    <img src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="home-profile-pic"/>
+                                <Link to={item.postedBy._id == state._id ? "/profile" : `/profile/${item.postedBy._id}`}><img src={item.postedBy.pic} alt="profile-pic"/></Link>
                                 </div>
                                 <div>
                                     <h5 className="home-card-title">

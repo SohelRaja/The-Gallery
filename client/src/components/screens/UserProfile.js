@@ -81,7 +81,7 @@ const UserProfile = () => {
         <div className="profile">
             <div className="profile-card">
                 <div>
-                    <img className="profile-pic" src="https://images.unsplash.com/photo-1503249023995-51b0f3778ccf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=311&q=80" alt="profile-pic" />
+                    <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
                 <div className="profile-info">
                     <h4>{userProfile.user.name}</h4>
@@ -96,7 +96,7 @@ const UserProfile = () => {
                         <button style={{margin: "10px"}} className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
                             onClick={()=>unfollowUser()}
                         >
-                            unfollow
+                            Following...
                         </button> :
                         <button style={{margin: "10px"}} className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
                             onClick={()=>followUser()}
