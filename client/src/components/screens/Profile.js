@@ -28,14 +28,15 @@ const Profile = () => {
                 <div className="profile-info">
                     <h4>{state? state.name : "loading..."}</h4>
                     <div className="profile-sub-info">
-                        <h6>100 posts</h6>
-                        <h6>100 followers</h6>
-                        <h6>100 following</h6>
+                        <h6>{myposts.length} posts</h6>
+                        <h6>{state? state.followers.length : "0"} followers</h6>
+                        <h6>{state? state.following.length : "0"} following</h6>
                     </div>
                 </div>
             </div>
             <div className="row profile-gallery">
                 {
+                    myposts ?
                     myposts.map(item=>{
                         return(
                             <div className="col s12 m6 profile-gallery-item" key={item._id}>
@@ -56,7 +57,7 @@ const Profile = () => {
                                 </div>
                             </div>
                         );
-                    })
+                    }) : "loading..."
                 }
             </div>
         </div>

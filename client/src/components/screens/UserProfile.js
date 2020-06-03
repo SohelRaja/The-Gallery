@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 
 import {UserContext} from '../../App';
 
-const Profile = () => {
+const UserProfile = () => {
     const [userProfile,setProfile] = useState(null);
     const {state, dispatch} = useContext(UserContext);
     const {userId} = useParams()
@@ -135,4 +135,4 @@ const Profile = () => {
     );
 }
 
-export default Profile;
+export default UserProfile;
