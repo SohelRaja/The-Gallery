@@ -111,6 +111,32 @@ router.put('/comment',requireLogin,(req,res)=>{
         }
     })
 });
+router.put('/makepublic',requireLogin,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        privacy: "public"
+    },{
+        new: true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err});
+        }else{
+            res.json(result);
+        }
+    })
+});
+router.put('/makeprivate',requireLogin,(req,res)=>{
+    Post.findByIdAndUpdate(req.body.postId,{
+        privacy: "private"
+    },{
+        new: true
+    }).exec((err,result)=>{
+        if(err){
+            return res.status(422).json({error:err});
+        }else{
+            res.json(result);
+        }
+    })
+});
 router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
     Post.findById(req.params.postId)
     .populate("postedBy","_id")

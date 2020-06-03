@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import { Link } from 'react-router-dom';
+import M from 'materialize-css';
 
 import {UserContext} from '../../App';
 import {UPLOAD_PRESET,CLOUD_NAME,BASE_URL} from '../../keys';
@@ -48,6 +49,58 @@ const Profile = () => {
     const updatePhoto = (file) => {
         setImage(file)
     }
+    const makePublic = (id) => {
+        fetch('/makepublic',{
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res=>res.json())
+        .then((result)=>{
+            // console.log(result);
+            const updatedMyPosts = myposts.map(item=>{
+                if(item._id === result._id){
+                    return result;
+                }else{
+                    return item;
+                }
+            })
+            setPosts(updatedMyPosts);
+            M.toast({html: "Updated to public mode", classes: "#ab47bc purple lighten-1"});
+        }).catch(err=>{
+            console.log(err);
+        });
+    }
+    const makePrivate = (id) => {
+        fetch('/makeprivate',{
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                postId: id
+            })
+        }).then(res=>res.json())
+        .then((result)=>{
+            // console.log(result);
+            const updatedMyPosts = myposts.map(item=>{
+                if(item._id === result._id){
+                    return result;
+                }else{
+                    return item;
+                }
+            })
+            setPosts(updatedMyPosts);
+            M.toast({html: "Updated to private mode", classes: "#ab47bc purple lighten-1"});
+        }).catch(err=>{
+            console.log(err);
+        });
+    }
     return (
         <div className="profile">
             <div className="profile-card">
@@ -89,10 +142,17 @@ const Profile = () => {
                                                 {item.title.length > 20 ? item.title.substring(0,20):item.title.substring(0,item.title.length)}{item.title.length > 20?"...":""}
                                             </span>
                                         </Link>
-                                        <Link to={`/mypost/${item._id}`}>{item.privacy==="private"? <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"><i className="material-icons">lock</i></span>:""}</Link>
+                                        {item.privacy==="private"? 
+                                        <span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
+                                            onClick={()=>makePublic(item._id)}
+                                        ><i className="material-icons">lock</i></span>
+                                        :<span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
+                                            onClick={()=>makePrivate(item._id)}
+                                        ><i className="material-icons">lock_open</i></span>}
                                         <Link to="/" className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></Link>
                                     </div>
                                     <div className="card-content">
+                                        <span style={{color:"#5e35b1"}}><b>{item.privacy==="private"? "Private Mode" : "Public Mode"}</b></span>
                                         <p>{item.body.length > 30 ? item.body.substring(0,30):item.body.substring(0,item.body.length)}{item.body.length > 30?"...":""}</p>
                                     </div>
                                 </div>

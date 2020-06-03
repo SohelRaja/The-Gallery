@@ -1,5 +1,6 @@
 import React,{useState, useEffect, useContext} from 'react';
 import {Link} from 'react-router-dom';
+import M from 'materialize-css';
 
 import {UserContext} from './../../App';
 
@@ -71,30 +72,35 @@ const SubscribeUsersPost = () => {
     }
 
     const makeComment = (text, postId)=>{
-        fetch("/comment",{
-            method: "put",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("jwt")
-            },
-            body: JSON.stringify({
-                text: text,
-                postId: postId
-            })
-        }).then(res=>res.json())
-        .then(result=>{
-            // console.log(result);
-            const newData = data.map(item=>{
-                if(item._id === result._id){
-                    return result;
-                }else{
-                    return item;
-                }
-            })
-            setData(newData);
-        }).catch(err=>{
-            console.log(err);
-        });
+        if(text && text.length){
+            fetch("/comment",{
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+                body: JSON.stringify({
+                    text: text,
+                    postId: postId
+                })
+            }).then(res=>res.json())
+            .then(result=>{
+                // console.log(result);
+                const newData = data.map(item=>{
+                    if(item._id === result._id){
+                        return result;
+                    }else{
+                        return item;
+                    }
+                })
+                setData(newData);
+                M.toast({html: "Comment added", classes: "#ab47bc purple lighten-1"});
+            }).catch(err=>{
+                console.log(err);
+            });
+        }else{
+            M.toast({html: "Enter a valid comment", classes: "#f44336 red"});
+        }
     }
     const deletePost = (postId)=>{
         fetch(`/deletepost/${postId}`,{
@@ -108,7 +114,8 @@ const SubscribeUsersPost = () => {
             const newData = data.filter(item=>{
                 return item._id !== result._id
             })
-            setData(newData)
+            setData(newData);
+            M.toast({html: "Successfully deleted", classes: "#ab47bc purple lighten-1"});
         })
     }
     return (
@@ -164,7 +171,8 @@ const SubscribeUsersPost = () => {
                                 <form
                                     onSubmit={(e)=>{
                                         e.preventDefault();
-                                        makeComment(e.target[0].value, item._id);
+                                        makeComment(e.target[0].value.trim(), item._id);
+                                        e.target[0].value = "";
                                     }}
                                 >
                                     <input type="text" placeholder="add a comment" />
