@@ -57,10 +57,11 @@
     margin: 0px auto;
 }
 .profile-card{
+    margin: 18px 0px;
+}
+.profile-card-plate{
     display: flex;
     justify-content: space-around;
-    margin: 18px 0px;
-    border-bottom: 1px solid #5e35b1;
 }
 .profile-pic{
     width: 160px;
