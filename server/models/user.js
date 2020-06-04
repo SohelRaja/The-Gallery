@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const {DEFAULT_PIC} = require('../keys');
+const {DEFAULT_PIC} = require('../config/keys');
 
 const {ObjectId} = mongoose.Schema.Types;
 
