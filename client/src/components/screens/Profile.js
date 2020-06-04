@@ -35,11 +35,29 @@ const Profile = () => {
                 body: data
             })
             .then(res=>res.json())
-            .then(data => {
-                setUrl(data.url);
-                console.log(data.url)
-                localStorage.setItem("user", JSON.stringify({...state, pic: data.url}));
-                dispatch({type:"UPDATEPIC", payload:{pic: data.url}})
+            .then(cloudData => {
+                setUrl(cloudData.url);
+                // console.log(cloudData.url)
+                // Update Request to Backend
+                fetch('/updatepic',{
+                    method: "put",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("jwt")
+                    },
+                    body: JSON.stringify({
+                        pic: cloudData.url
+                    })
+                }).then(res=>res.json())
+                .then(result=>{
+                    if(result.error){
+                        M.toast({html: result.error, classes: "#f44336 red"});
+                    }else{
+                        localStorage.setItem("user", JSON.stringify({...state, pic: result.pic}));
+                        dispatch({type:"UPDATEPIC", payload:{pic: result.pic}});
+                        M.toast({html: "Profile pic updated!", classes: "#ab47bc purple lighten-1"});
+                    }
+                })
             })
             .catch(err=>{
                 console.log(err);
@@ -103,7 +121,7 @@ const Profile = () => {
     }
     return (
         <div className="profile">
-            <div className="profile-card">
+            <div className="profile-card" style={{borderBottom:"2px solid #5e35b1"}}>
                 <div className="profile-card-plate">
                     <div>
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>

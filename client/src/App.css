@@ -93,6 +93,9 @@
 .profile-lock i{
     color: #5e35b1 !important;
 }
+.file-path-wrapper{
+    opacity: 0;
+}
 /* My post Style */
 .my-post-lock{
     position: absolute !important;
