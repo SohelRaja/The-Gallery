@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import M from 'materialize-css';
 
@@ -65,32 +65,43 @@ const EditPost = () =>{
         history.push('/profile');
     }
     return (
-        <div className="card input-field post-card">
-            <h2>Edit Post</h2>
-            <h5>{thisPostData.title}</h5>
-            <input 
-                type="text" 
-                placeholder={thisPostData.title} 
-                value={title}
-                onChange={(e)=>setTitle(e.target.value)}
-            />
-            <input 
-                type="text" 
-                placeholder={thisPostData.body}
-                value={body}
-                onChange={(e)=>setBody(e.target.value)} 
-            />
-            <div className="edit-form-buttons">
-                <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
-                    onClick={()=>Cancel()}
-                >
-                    Cancel
-                </button>
-                <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
-                    onClick={()=>updatePost()}
-                >
-                    Update Post
-                </button>
+        <div>
+            <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
+                <div class="nav-wrapper container">
+                <div class="col s12">
+                    <Link to="/" class="breadcrumb">The Gallery</Link>
+                    <Link to="/profile" class="breadcrumb">Profile</Link>
+                    <Link class="breadcrumb">Edit Post</Link>
+                </div>
+                </div>
+            </nav>
+            <div className="card input-field post-card">
+                <h2>Edit Post</h2>
+                <h5>{thisPostData.title}</h5>
+                <input 
+                    type="text" 
+                    placeholder={thisPostData.title} 
+                    value={title}
+                    onChange={(e)=>setTitle(e.target.value)}
+                />
+                <input 
+                    type="text" 
+                    placeholder={thisPostData.body}
+                    value={body}
+                    onChange={(e)=>setBody(e.target.value)} 
+                />
+                <div className="edit-form-buttons">
+                    <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                        onClick={()=>Cancel()}
+                    >
+                        Cancel
+                    </button>
+                    <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                        onClick={()=>updatePost()}
+                    >
+                        Update Post
+                    </button>
+                </div>
             </div>
         </div>
     );

@@ -84,8 +84,8 @@ const UserProfile = () => {
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
                 <div className="profile-info">
-                    <h4>{userProfile.user.name}</h4>
-                    <h5>{userProfile.user.email}</h5>
+                    <h4 style={{color:"#5e35b1"}}>{userProfile.user.name}</h4>
+                    <h5 style={{color:"#7e57c2"}}>{userProfile.user.email}</h5>
                     <div className="profile-sub-info">
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts</h6>
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.followers.length}</b> followers</h6>
@@ -115,12 +115,12 @@ const UserProfile = () => {
                                     <div className="card-image">
                                         <img src={item.photo} alt={item.title} />
                                         <span className="card-title">
-                                            {item.title.length > 20 ? item.title.substring(0,20):item.title.substring(0,item.title.length)}{item.title.length > 20?"...":""}
+                                            {item.title.length > 10 ? item.title.substring(0,10):item.title.substring(0,item.title.length)}{item.title.length > 10?"...":""}
                                         </span>
                                     </div>
                                     <div className="card-content">
-                                        <p><b>{item.likes.length} likes</b></p>
-                                        <p>{item.body.length > 30 ? item.body.substring(0,30):item.body.substring(0,item.body.length)}{item.body.length > 30?"...":""}</p>
+                                        <p style={{color:"#e91e63"}}><b>{item.likes.length} likes</b></p>
+                                        <p>{item.body.length > 25 ? item.body.substring(0,25):item.body.substring(0,item.body.length)}{item.body.length > 25?"...":""}</p>
                                     </div>
                                 </div>
                             </div>

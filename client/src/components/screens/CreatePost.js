@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {useHistory} from 'react-router-dom';
+import {useHistory, Link} from 'react-router-dom';
 import M from 'materialize-css';
 
 import {UPLOAD_PRESET, CLOUD_NAME, BASE_URL} from '../../keys';
@@ -63,6 +63,16 @@ const CreatePost = () =>{
         });
     }
     return (
+        <div>
+        <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
+            <div class="nav-wrapper container">
+            <div class="col s12">
+                <Link to="/" class="breadcrumb">The Gallery</Link>
+                <Link to="/profile" class="breadcrumb">Profile</Link>
+                <Link class="breadcrumb">Create Post</Link>
+            </div>
+            </div>
+        </nav>
         <div className="card input-field post-card">
             <h2>Create Post</h2>
             <input 
@@ -111,6 +121,7 @@ const CreatePost = () =>{
             >
                 Upload Post
             </button>
+        </div>
         </div>
     );
 }
