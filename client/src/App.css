@@ -1,17 +1,31 @@
 .mynavbar a{
     color: #5e35b1 !important;
 }
+.sidenav-info{
+    color: #5e35b1 !important;
+}
 /* Auth page style */
 .mycard{
     margin-top: 30px;
 }
 .auth-card{
     padding: 20px;
+    height: 500px;
     max-width: 400px;
     text-align: center;
     margin: 10px auto;
 }
 .auth-card h2{
+    color: #5e35b1;
+}
+.auth-card-signin{
+    padding: 20px;
+    height: 350px;
+    max-width: 400px;
+    text-align: center;
+    margin: 10px auto;
+}
+.auth-card-signin h2{
     color: #5e35b1;
 }
 .input-field input[type=text]:focus {
@@ -34,7 +48,7 @@
 /* Post page style */
 .post-card{
     padding: 20px;
-    max-width: 500px;
+    max-width: 450px;
     text-align: center;
     margin: 30px auto;
 }
@@ -57,16 +71,16 @@
     margin: 0px auto;
 }
 .profile-card{
-    margin: 18px 0px;
+    margin: 18px auto;
 }
 .profile-card-plate{
     display: flex;
     justify-content: space-around;
 }
 .profile-pic{
-    width: 160px;
-    height: 160px;
-    border-radius: 80px;
+    width: 140px;
+    height: 140px;
+    border-radius: 70px;
 }
 .profile-sub-info{
     display: flex;
@@ -87,8 +101,15 @@
 }
 .profile-lock{
     position: absolute !important;
-    left: 24px !important;
+    left: 10% !important;
     bottom: -20px !important;
+}
+.profile-delete{
+    position: absolute !important;
+    left: 42% !important;
+    bottom: -20px !important;
+    background-color: #e53935 !important;
+    color: white;
 }
 .profile-lock i{
     color: #5e35b1 !important;
@@ -99,11 +120,49 @@
 .rodal-dialog{
     max-width: 350px !important;
 }
+@media screen and (max-device-width: 480px) and (orientation: portrait){
+    .auth-card{
+        height: 450px;
+    }
+    .profile-card{
+        height: 400px;
+    }
+    .profile-pic-plate{
+        position: absolute;
+        left: 50%;
+        top: 25%;
+        transform: translate(-50%, -50%);
+    }
+    .profile-info{
+        position: absolute;
+        left: 50%;
+        top: 47%;
+        transform: translate(-50%, -50%);
+        text-align: center;
+    }
+    .file-upload{
+        position: absolute;
+        left: 52%;
+        top: 67%;
+        transform: translate(-50%, -50%);
+    }
+}
+.logout-button{
+    margin-left: 30px;
+}
+/* Edit Page Style */
+.edit-form-buttons{
+    display: flex;
+    justify-content: space-between;
+}
 /* My post Style */
 .my-post-lock{
     position: absolute !important;
     right: 24px !important;
     top: 20px !important;
+}
+.myBreadcrumb{
+    margin-top: 20px;
 }
 /* Home Page Style */
 .home-card{
@@ -156,4 +215,5 @@ input[type=text]:focus {
     top: 30px !important;
     right: 30px !important;
     left: auto !important;
+    text-align: center;
 }

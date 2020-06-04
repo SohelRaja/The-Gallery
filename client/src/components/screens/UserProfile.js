@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import {UserContext} from '../../App';
 
@@ -18,7 +18,7 @@ const UserProfile = () => {
         }).catch(err=>{
             console.log(err);
         });
-    },[]);
+    },[userId]);
     const followUser = ()=>{
         fetch('/follow',{
             method: "put",
@@ -62,7 +62,7 @@ const UserProfile = () => {
             setProfile((prevState)=>{
                 const newFollowers = prevState.user.followers.filter(item=>{
                     return(
-                        item != data._id
+                        item !== data._id
                     )
                 })
                 return {
@@ -87,9 +87,9 @@ const UserProfile = () => {
                     <h4>{userProfile.user.name}</h4>
                     <h5>{userProfile.user.email}</h5>
                     <div className="profile-sub-info">
-                        <h6>{userProfile.posts.length} posts</h6>
-                        <h6>{userProfile.user.followers.length} followers</h6>
-                        <h6>{userProfile.user.following.length} following</h6>
+                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts</h6>
+                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.followers.length}</b> followers</h6>
+                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.following.length}</b> following</h6>
                     </div>
                     {
                         userProfile.user.followers.includes(state._id) ?

@@ -39,7 +39,7 @@ const Signin = () => {
     };
     return (
         <div className='mycard'>
-            <div className="card auth-card input-field">
+            <div className="card input-field auth-card-signin">
                 <h2>Sign In</h2>
                 <input 
                     type='text'

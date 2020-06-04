@@ -126,12 +126,12 @@ const Home = () => {
                         <div className="card home-card" key={item._id}>
                             <div className="home-card-heading">
                                 <div>
-                                <Link to={item.postedBy._id == state._id ? "/profile" : `/profile/${item.postedBy._id}`}><img src={item.postedBy.pic} alt="profile-pic"/></Link>
+                                <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}><img src={item.postedBy.pic} alt="profile-pic"/></Link>
                                 </div>
                                 <div>
                                     <h5 className="home-card-title">
-                                        <Link to={item.postedBy._id == state._id ? "/profile" : `/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
-                                        {item.postedBy._id == state._id &&
+                                        <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
+                                        {item.postedBy._id === state._id &&
                                             <i className="material-icons delete-icon"
                                                 onClick={()=>deletePost(item._id)}
                                             >delete</i>

@@ -10,7 +10,13 @@ const EditPost = () =>{
     const [title, setTitle] = useState("");
     const [body, setBody] = useState("");
     const [fetchedPostId, setPostID] = useState("");
-    const {postId} = useParams()
+    const {postId} = useParams();
+    const thisPost = JSON.parse(localStorage.getItem('post'));
+    const thisPostData = thisPost.find(post=>{
+        if(post._id === postId){
+            return post;
+        }
+    })
     useEffect(()=>{
         fetch(`/editpost/${postId}`,{
             headers: {
@@ -55,26 +61,37 @@ const EditPost = () =>{
             console.log(err);
         });
     }
+    const Cancel = () => {
+        history.push('/profile');
+    }
     return (
         <div className="card input-field post-card">
             <h2>Edit Post</h2>
+            <h5>{thisPostData.title}</h5>
             <input 
                 type="text" 
-                placeholder="Title" 
+                placeholder={thisPostData.title} 
                 value={title}
                 onChange={(e)=>setTitle(e.target.value)}
             />
             <input 
                 type="text" 
-                placeholder="Description"
+                placeholder={thisPostData.body}
                 value={body}
                 onChange={(e)=>setBody(e.target.value)} 
             />
-            <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
-                onClick={()=>updatePost()}
-            >
-                Update Post
-            </button>
+            <div className="edit-form-buttons">
+                <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                    onClick={()=>Cancel()}
+                >
+                    Cancel
+                </button>
+                <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
+                    onClick={()=>updatePost()}
+                >
+                    Update Post
+                </button>
+            </div>
         </div>
     );
 }

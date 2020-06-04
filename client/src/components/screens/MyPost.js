@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import {Link} from 'react-router-dom';
 
 export default class MyPost extends Component{
     render(){
@@ -12,6 +13,15 @@ export default class MyPost extends Component{
     console.log(postData)
     return (
         <div className="home">
+            <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
+                <div class="nav-wrapper container">
+                <div class="col s12">
+                    <Link to="/" class="breadcrumb">The Gallery</Link>
+                    <Link to="/profile" class="breadcrumb">Profile</Link>
+                    <Link class="breadcrumb">{postData.title.length > 10 ? postData.title.substring(0,10):postData.title.substring(0,postData.title.length)}{postData.title.length > 10?"...":""}</Link>
+                </div>
+                </div>
+            </nav>
             <div className="card home-card" key={postData._id}>
                 <div className="home-card-heading">
                     <div>
@@ -33,9 +43,6 @@ export default class MyPost extends Component{
                             );
                         })
                     }
-                    {/* <button className="btn waves-effect waves-light #5e35b1 deep-purple darken-1">
-                    Edit
-                    </button> */}
                 </div>
             </div>
         </div>

@@ -119,24 +119,40 @@ const Profile = () => {
             console.log(err);
         });
     }
+    const deletePost = (postId)=>{
+        fetch(`/deletepost/${postId}`,{
+            method: "delete",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt") 
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            const updatedMyPosts = myposts.filter(item=>{
+                return item._id !== result._id
+            })
+            setPosts(updatedMyPosts);
+            M.toast({html: "Successfully deleted", classes: "#ab47bc purple lighten-1"});
+        })
+    }
     return (
         <div className="profile">
             <div className="profile-card" style={{borderBottom:"2px solid #5e35b1"}}>
                 <div className="profile-card-plate">
-                    <div>
+                    <div className="profile-pic-plate">
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
                     </div>
                     <div className="profile-info">
-                        <h4>{state? state.name : "loading..."}</h4>
-                        <h5>{state? state.email : "loading..."}</h5>
+                        <h4 style={{color:"#5e35b1"}}>{state? state.name : "loading..."}</h4>
+                        <h5 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h5>
                         <div className="profile-sub-info">
-                            <h6>{myposts.length} posts</h6>
-                            <h6>{state? state.followers.length : "0"} followers</h6>
-                            <h6>{state? state.following.length : "0"} following</h6>
+                            <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
+                            <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>
+                            <h6><b style={{color: "#6a1b9a"}}>{state? state.following.length : "0"}</b> following</h6>
                         </div>
                     </div>
                 </div>
-                <div className="file-field input-field" style={{margin: "10px"}}>
+                <div className="file-upload file-field input-field" style={{margin: "10px"}}>
                     <div className="btn #5e35b1 deep-purple darken-1">
                         <span>Update Pic</span>
                         <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
@@ -157,7 +173,7 @@ const Profile = () => {
                                         <Link to={`/mypost/${item._id}`}><img src={item.photo} alt={item.title} /></Link>
                                         <Link to={`/mypost/${item._id}`}>
                                             <span className="card-title">
-                                                {item.title.length > 20 ? item.title.substring(0,20):item.title.substring(0,item.title.length)}{item.title.length > 20?"...":""}
+                                                {item.title.length > 10 ? item.title.substring(0,10):item.title.substring(0,item.title.length)}{item.title.length > 10?"...":""}
                                             </span>
                                         </Link>
                                         {item.privacy==="private"? 
@@ -167,11 +183,15 @@ const Profile = () => {
                                         :<span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
                                             onClick={()=>makePrivate(item._id)}
                                         ><i className="material-icons">lock_open</i></span>}
+                                        <span className="btn-floating halfway-fab waves-effect waves-light profile-delete"
+                                            onClick={()=>deletePost(item._id)}
+                                        ><i className="material-icons">delete</i></span>
                                         <Link to={`/editpost/${item._id}`}><span className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></span></Link>
                                     </div>
                                     <div className="card-content">
                                         <span style={{color:"#5e35b1"}}><b>{item.privacy==="private"? "Private Mode" : "Public Mode"}</b></span>
-                                        <p>{item.body.length > 30 ? item.body.substring(0,30):item.body.substring(0,item.body.length)}{item.body.length > 30?"...":""}</p>
+                                        <p style={{color:"#e91e63"}}><b>{item.likes.length} likes</b></p>
+                                        <p>{item.body.length > 25 ? item.body.substring(0,25):item.body.substring(0,item.body.length)}{item.body.length > 25?"...":""}</p>
                                     </div>
                                 </div>
                             </div>
