@@ -167,7 +167,7 @@ const Profile = () => {
                                         :<span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
                                             onClick={()=>makePrivate(item._id)}
                                         ><i className="material-icons">lock_open</i></span>}
-                                        <Link to="/" className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></Link>
+                                        <Link to={`/editpost/${item._id}`}><span className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></span></Link>
                                     </div>
                                     <div className="card-content">
                                         <span style={{color:"#5e35b1"}}><b>{item.privacy==="private"? "Private Mode" : "Public Mode"}</b></span>

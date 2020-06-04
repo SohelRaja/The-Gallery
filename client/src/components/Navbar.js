@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {Link, useHistory} from 'react-router-dom';
+import M from 'materialize-css';
 
 import {UserContext} from '../App';
 
@@ -17,6 +18,7 @@ const NavBar = () => {
                         onClick={()=>{
                             localStorage.clear();
                             dispatch({type: "CLEAR"});
+                            M.toast({html: "Successfully logged out.", classes: "#ab47bc purple lighten-1"});
                             history.push('/signin');
                         }}
                     >

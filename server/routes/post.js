@@ -65,6 +65,35 @@ router.get('/mypost', requireLogin, (req,res)=>{
         console.log(err);
     });
 });
+router.get('/editpost/:postId',requireLogin,(req,res)=>{
+    Post.findOne({_id: req.params.postId})
+    .then((post)=>{
+        res.json({post})
+    }).catch(err=>{
+        return res.status(404).json({error: "Post not found."});
+    })
+});
+router.put('/updatepost', requireLogin, (req,res)=>{
+    const {title, body, postId} = req.body;
+    if(!title || !body){
+        return res.status(422).json({
+            error: "Please add all the fields."
+        })
+    }else{
+        Post.findByIdAndUpdate(postId,{
+            title: title,
+            body: body
+        },{
+            new: true
+        }).exec((err,result)=>{
+            if(err){
+                return res.status(422).json({error:"Something went wrong."});
+            }else{
+                res.json(result);
+            }
+        })
+    }
+});
 router.put('/like',requireLogin,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         $push: {likes: req.user._id}

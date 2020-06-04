@@ -1,5 +1,6 @@
 import React, {useEffect, createContext, useReducer, useContext} from 'react';
 import {BrowserRouter, Route, Switch, useHistory} from 'react-router-dom';
+import 'materialize-css/dist/css/materialize.min.css';
 
 import './App.css';
 import NavBar from './components/Navbar';
@@ -9,6 +10,7 @@ import Signup from './components/screens/Signup';
 import Profile from './components/screens/Profile';
 import UserProfile from './components/screens/UserProfile';
 import CreatePost from './components/screens/CreatePost';
+import EditPost from './components/screens/EditPost';
 import MyPost from './components/screens/MyPost';
 import SubscribeUsersPost from './components/screens/SubscribeUsersPosts';
 import {reducer, initialState} from './reducers/userReducer';
@@ -42,6 +44,9 @@ const Routing = ()=>{
       </Route>
       <Route path="/create">
         <CreatePost />
+      </Route>
+      <Route path="/editpost/:postId">
+        <EditPost />
       </Route>
       <Route path="/profile/:userId">
         <UserProfile />

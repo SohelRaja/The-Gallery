@@ -96,6 +96,9 @@
 .file-path-wrapper{
     opacity: 0;
 }
+.rodal-dialog{
+    max-width: 350px !important;
+}
 /* My post Style */
 .my-post-lock{
     position: absolute !important;
