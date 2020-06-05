@@ -83,7 +83,7 @@ const UserProfile = () => {
                 <div>
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
-                <div className="profile-info user-profile">
+                <div className="user-profile">
                     <h4 style={{color:"#5e35b1"}}>{userProfile.user.name}</h4>
                     <h5 style={{color:"#7e57c2"}}>{userProfile.user.email}</h5>
                     <div className="profile-sub-info">

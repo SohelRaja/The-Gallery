@@ -20,7 +20,7 @@ const NavBar = () => {
     const renderList = () => {
         if(state){
             return [
-                <li key="1"><i data-target="search-modal" className="large material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>search</i></li>,
+                <li key="1"><i data-target="search-modal" className="large material-icons modal-trigger search-icon" style={{color: "#5e35b1", cursor: "pointer"}}>search</i></li>,
                 <li key="2"><Link to="/subscriberspost">Subcribers Post</Link></li>,
                 <li key="3"><Link to="/profile">Profile</Link></li>,
                 <li key="4"><Link to="/create">Create post</Link></li>,
@@ -79,8 +79,8 @@ const NavBar = () => {
                         { user ?
                         <>
                             <div>
-                                <img className="circle" src={user.pic} alt={user.name} />
-                                <span className="sidenav-info name">{user.name}</span>
+                            <Link to="/profile"><img className="circle" src={user.pic} alt={user.name} /></Link>
+                            <Link to="/profile"><span className="sidenav-info name">{user.name}</span></Link>
                                 <span className="sidenav-info email">{user.email}</span><hr/>
                             </div>
                         </>
