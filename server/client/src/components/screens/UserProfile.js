@@ -83,7 +83,7 @@ const UserProfile = () => {
                 <div>
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
-                <div className="profile-info">
+                <div className="profile-info user-profile">
                     <h4 style={{color:"#5e35b1"}}>{userProfile.user.name}</h4>
                     <h5 style={{color:"#7e57c2"}}>{userProfile.user.email}</h5>
                     <div className="profile-sub-info">
@@ -113,7 +113,7 @@ const UserProfile = () => {
                             <div className="col s12 m6 profile-gallery-item" key={item._id}>
                                 <div className="card">
                                     <div className="card-image">
-                                        <img src={item.photo} alt={item.title} />
+                                        <img className="gallery-pic" src={item.photo} alt={item.title} />
                                         <span className="card-title">
                                             {item.title.length > 10 ? item.title.substring(0,10):item.title.substring(0,item.title.length)}{item.title.length > 10?"...":""}
                                         </span>

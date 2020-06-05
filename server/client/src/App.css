@@ -4,6 +4,10 @@
 .sidenav-info{
     color: #5e35b1 !important;
 }
+.collection .collection-item {
+    display: block;
+    width: 100%;
+}
 /* Auth page style */
 .mycard{
     margin-top: 30px;
@@ -135,10 +139,12 @@
     }
     .profile-info{
         position: absolute;
-        left: 50%;
-        top: 47%;
+        left: 48%;
         transform: translate(-50%, -50%);
         text-align: center;
+    }
+    .user-profile{
+        top: 55%;
     }
     .file-upload{
         position: absolute;
