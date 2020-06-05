@@ -140,11 +140,12 @@
     .profile-info{
         position: absolute;
         left: 48%;
+        top: 53%;
         transform: translate(-50%, -50%);
         text-align: center;
     }
     .user-profile{
-        top: 55%;
+        top: 58%;
     }
     .file-upload{
         position: absolute;
