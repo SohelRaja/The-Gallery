@@ -59,6 +59,7 @@ const Signin = () => {
                     Signin
                 </button>
                 <h6 className='sign-link'><Link to='/signup'>Don't have an account ?</Link></h6>
+                <h6 style={{color: "#5e35b1"}}> Dev ❤️ ed by <a href="https://sohelraja.github.io" style={{color: "#e91e63"}}>Sohel Raja Molla</a></h6>
             </div>
         </div>
     );
