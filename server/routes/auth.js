@@ -16,7 +16,7 @@ router.get('/protected',requireLogin, (req,res)=>{
 
 // Sign up routes
 router.post('/signup',(req,res)=>{
-    const {name,email,password, pic} = req.body
+    let {name,email,password, pic} = req.body
     if(!email || !name || !password){
         return res.status(422).json({
             error: "Please add all the fields."
@@ -25,6 +25,11 @@ router.post('/signup',(req,res)=>{
     if(!/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/.test(email)){
         return res.status(422).json({
             error: "Invalid email."
+        });
+    }
+    if(name.length > 20 || name.length < 4){
+        return res.status(422).json({
+            error: "Name must be within 4 to 20 charecters."
         });
     }
     User.findOne({email:email})
@@ -40,7 +45,7 @@ router.post('/signup',(req,res)=>{
                 const user = new User({
                     email,
                     password: hashedPasswoord,
-                    name,
+                    name: name,
                     pic
                 })
 

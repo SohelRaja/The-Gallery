@@ -68,6 +68,27 @@ router.put('/updatepic', requireLogin, (req,res)=>{
     })
 });
 
+router.put('/updatename', requireLogin, (req,res)=>{
+    let name = req.body.name;
+    if(!name){
+        return res.status(422).json({
+            error: "Please provide a new name."
+        })
+    }
+    if(name.length > 20 || name.length < 4){
+        return res.status(422).json({
+            error: "Name must be within 4 to 20 charecters."
+        });
+    }
+    User.findByIdAndUpdate(req.user._id, {$set: {name: name}},{new: true}, 
+        (err,result)=>{
+        if(err){
+            return res.status(422).json({error: "Unable to update profile name!"});
+        }
+        res.json(result);
+    })
+});
+
 router.post('/search-users',requireLogin, (req,res)=>{
     let userPattern = new RegExp("^"+req.body.query);
     User.find({email: {$regex: userPattern}})

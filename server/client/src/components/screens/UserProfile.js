@@ -84,8 +84,9 @@ const UserProfile = () => {
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
                 <div className="user-profile">
-                    <h4 style={{color:"#5e35b1"}}>{userProfile.user.name}</h4>
-                    <h5 style={{color:"#7e57c2"}}>{userProfile.user.email}</h5>
+                    <h5 style={{color:"#5e35b1"}}>{userProfile.user.name}</h5>
+                    <h6 className="hide-on-small-only" style={{color:"#7e57c2"}}>{userProfile.user.email}</h6>
+                    <p className="hide-on-med-and-up" style={{color:"#7e57c2"}}>{userProfile.user.email}</p>
                     <div className="profile-sub-info">
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts</h6>
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.followers.length}</b> followers</h6>

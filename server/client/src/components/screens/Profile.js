@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext} from 'react';
+import React, {useEffect, useState, useContext, useRef} from 'react';
 import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 
@@ -6,11 +6,14 @@ import {UserContext} from '../../App';
 import {UPLOAD_PRESET,CLOUD_NAME,BASE_URL} from '../../keys';
 
 const Profile = () => {
+    const editNameModal = useRef(null);
     const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     const [url,setUrl] = useState(undefined);
     const [image,setImage] = useState("");
+    const [name,setName] = useState("");
     useEffect(()=>{
+        M.Modal.init(editNameModal.current);
         fetch('/mypost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -66,6 +69,27 @@ const Profile = () => {
     },[image]);
     const updatePhoto = (file) => {
         setImage(file)
+    }
+    const updateName = () => {
+        fetch('/updatename',{
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                name: name.trim()
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            if(result.error){
+                M.toast({html: result.error, classes: "#f44336 red"});
+            }else{
+                localStorage.setItem("user", JSON.stringify({...state, name: result.name}));
+                dispatch({type:"UPDATENAME", payload:{name: result.name}});
+                M.toast({html: "Profile name updated!", classes: "#ab47bc purple lighten-1"});
+            }
+        })
     }
     const makePublic = (id) => {
         fetch('/makepublic',{
@@ -143,8 +167,9 @@ const Profile = () => {
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
                     </div>
                     <div className="profile-info">
-                        <h4 style={{color:"#5e35b1"}}>{state? state.name : "loading..."}</h4>
-                        <h5 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h5>
+                        <h5 style={{color:"#5e35b1"}}>{state? state.name : "loading..."} <i style={{color: "#6a1b9a"}} data-target="edit-name-modal" className="material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>edit</i></h5>
+                        <h6 className="hide-on-small-only" style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
+                        <p className="hide-on-med-and-up" style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</p>
                         <div className="profile-sub-info">
                             <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>
@@ -198,6 +223,30 @@ const Profile = () => {
                         );
                     }) : "loading..."
                 }
+            </div>
+            <div id="edit-name-modal" className="modal" ref={editNameModal} style={{color: "#5e35b1"}}>
+                <div className="modal-content">
+                    <input 
+                        type='text'
+                        placeholder={state? state.name : "loading..."}
+                        value={name ? name : ""}
+                        onChange={(e)=>setName(e.target.value)}
+                    />
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-close waves-effect waves-green btn-flat" 
+                        onClick={()=>{
+                            setName("");
+                        }}
+                    >Close</button>
+                   <button className="waves-effect waves-green btn-flat" 
+                    onClick={()=>{
+                        updateName();
+                        M.Modal.getInstance(editNameModal.current).close();
+                        setName("");
+                    }}
+                   >Update</button>
+                </div>
             </div>
         </div>
     );
