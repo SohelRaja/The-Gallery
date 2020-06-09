@@ -17,7 +17,7 @@ const Signin = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                email: email,
+                email: email.trim().toLowerCase(),
                 password: password
             })
         }).then(res=>res.json())

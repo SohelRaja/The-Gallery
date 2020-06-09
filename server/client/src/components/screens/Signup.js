@@ -44,7 +44,7 @@ const Signup = () => {
             },
             body: JSON.stringify({
                 name: name.trim(),
-                email: email.trim(),
+                email: email.trim().toLowerCase(),
                 password: password,
                 pic: url
             })
