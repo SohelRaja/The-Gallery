@@ -79,17 +79,16 @@ const UserProfile = () => {
     <>
     {userProfile ? 
         <div className="profile">
-            <div className="profile-card profile-card-plate" style={{borderBottom:"2px solid #5e35b1"}}>
-                <div>
+            <div className="user-profile-card profile-card-plate" style={{borderBottom:"2px solid #5e35b1"}}>
+                <div className="profile-pic-plate">
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
                 <div className="user-profile">
                     <h5 style={{color:"#5e35b1"}}>{userProfile.user.name}</h5>
-                    <h6 className="hide-on-small-only" style={{color:"#7e57c2"}}>{userProfile.user.email}</h6>
-                    <p className="hide-on-med-and-up" style={{color:"#7e57c2"}}>{userProfile.user.email}</p>
-                    <div className="profile-sub-info">
-                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts</h6>
-                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.followers.length}</b> followers</h6>
+                    <h6 style={{color:"#7e57c2"}}>{userProfile.user.email}</h6>
+                    <div className="user-profile-sub-info">
+                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts&nbsp;&nbsp;&nbsp;</h6>
+                        <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.followers.length}</b> followers&nbsp;&nbsp;&nbsp;</h6>
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.user.following.length}</b> following</h6>
                     </div>
                     {

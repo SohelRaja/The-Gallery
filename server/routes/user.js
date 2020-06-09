@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const requireLogin = require('../middlewares/requireLogin');
 
@@ -86,6 +87,21 @@ router.put('/updatename', requireLogin, (req,res)=>{
             return res.status(422).json({error: "Unable to update profile name!"});
         }
         res.json(result);
+    })
+});
+router.put('/changepassword', requireLogin, (req,res)=>{
+    const password = req.body.password;
+    bcrypt.hash(password, 11)
+    .then((hashedPassword)=>{
+        User.findByIdAndUpdate(req.user._id, {$set: {password: hashedPassword}},{new: true}, 
+            (err,result)=>{
+            if(err){
+                return res.status(422).json({error: "Unable to update password!"});
+            }
+            res.json({
+                message: "Password changed!."
+            })
+        })
     })
 });
 

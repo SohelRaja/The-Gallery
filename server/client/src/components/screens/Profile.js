@@ -7,13 +7,16 @@ import {UPLOAD_PRESET,CLOUD_NAME,BASE_URL} from '../../keys';
 
 const Profile = () => {
     const editNameModal = useRef(null);
+    const changePasswordModal = useRef(null);
     const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     const [url,setUrl] = useState(undefined);
     const [image,setImage] = useState("");
     const [name,setName] = useState("");
+    const [password,setPassword] = useState("");
     useEffect(()=>{
         M.Modal.init(editNameModal.current);
+        M.Modal.init(changePasswordModal.current);
         fetch('/mypost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -88,6 +91,25 @@ const Profile = () => {
                 localStorage.setItem("user", JSON.stringify({...state, name: result.name}));
                 dispatch({type:"UPDATENAME", payload:{name: result.name}});
                 M.toast({html: "Profile name updated!", classes: "#ab47bc purple lighten-1"});
+            }
+        })
+    }
+    const changePassword = () => {
+        fetch('/changepassword',{
+            method: "put",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + localStorage.getItem("jwt")
+            },
+            body: JSON.stringify({
+                password
+            })
+        }).then(res=>res.json())
+        .then(result=>{
+            if(result.error){
+                M.toast({html: result.error, classes: "#f44336 red"});
+            }else{
+                M.toast({html: result.message, classes: "#ab47bc purple lighten-1"});
             }
         })
     }
@@ -168,16 +190,31 @@ const Profile = () => {
                     </div>
                     <div className="profile-info">
                         <h5 style={{color:"#5e35b1"}}>{state? state.name : "loading..."} <i style={{color: "#6a1b9a"}} data-target="edit-name-modal" className="material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>edit</i></h5>
-                        <h6 className="hide-on-small-only" style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
-                        <p className="hide-on-med-and-up" style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</p>
+                        <h6 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
                         <div className="profile-sub-info">
                             <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.following.length : "0"}</b> following</h6>
                         </div>
+                        <div className="change-password-button">
+                            <button 
+                                style={{margin: "10px"}} 
+                                data-target="change-password-modal" 
+                                className="btn waves-effect waves-light #5e35b1 deep-purple darken-1 modal-trigger"
+                            >Change Password</button>
+                        </div>
+                        <div className="hide-on-med-and-up file-upload file-field input-field" style={{margin: "10px"}}>
+                            <div className="btn #5e35b1 deep-purple darken-1 upload-pic-button">
+                                <span>Update Pic</span>
+                                <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
+                            </div>
+                            <div className="file-path-wrapper">
+                                <input className="file-path validate" type="text" />
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="file-upload file-field input-field" style={{margin: "10px"}}>
+                <div className="hide-on-small-only file-upload file-field input-field" style={{margin: "10px"}}>
                     <div className="btn #5e35b1 deep-purple darken-1">
                         <span>Update Pic</span>
                         <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
@@ -226,6 +263,7 @@ const Profile = () => {
             </div>
             <div id="edit-name-modal" className="modal" ref={editNameModal} style={{color: "#5e35b1"}}>
                 <div className="modal-content">
+                    <h4>Update Profile Name</h4>
                     <input 
                         type='text'
                         placeholder={state? state.name : "loading..."}
@@ -246,6 +284,31 @@ const Profile = () => {
                         setName("");
                     }}
                    >Update</button>
+                </div>
+            </div>
+            <div id="change-password-modal" className="modal" ref={changePasswordModal} style={{color: "#5e35b1"}}>
+                <div className="modal-content">
+                    <h4>Change Password</h4>
+                    <input 
+                        type='text'
+                        placeholder="Enter your new password"
+                        value={password}
+                        onChange={(e)=>setPassword(e.target.value)}
+                    />
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-close waves-effect waves-green btn-flat" 
+                        onClick={()=>{
+                            setPassword("");
+                        }}
+                    >Close</button>
+                   <button className="waves-effect waves-green btn-flat" 
+                    onClick={()=>{
+                        changePassword();
+                        M.Modal.getInstance(changePasswordModal.current).close();
+                        setPassword("");
+                    }}
+                   >Change Password</button>
                 </div>
             </div>
         </div>

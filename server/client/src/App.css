@@ -1,3 +1,7 @@
+html{
+    margin: 0;
+    padding: 0;
+}
 .mynavbar a{
     color: #5e35b1 !important;
 }
@@ -14,7 +18,7 @@
 }
 .auth-card{
     padding: 20px;
-    height: 540px;
+    height: 500px;
     max-width: 400px;
     text-align: center;
     margin: 10px auto;
@@ -74,7 +78,7 @@
     max-width: 550px;
     margin: 0px auto;
 }
-.profile-card{
+.profile-card, .user-profile-card{
     margin: 18px auto;
 }
 .profile-card-plate{
@@ -124,41 +128,59 @@
 .rodal-dialog{
     max-width: 350px !important;
 }
+.search-icon{
+    margin-left: 30px;
+}
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{
         margin-left: 30px;
     }
     .auth-card{
-        height: 450px;
+        height: 480px;
     }
     .profile-card{
-        height: 400px;
+        height: 450px;
     }
-    .profile-pic-plate{
-        position: absolute;
-        left: 50%;
-        top: 25%;
-        transform: translate(-50%, -50%);
+    .profile-card-plate{
+        display: grid;
+    }
+    .profile-pic-plate, .profile-info{
+        margin: 0 auto;
     }
     .profile-info{
-        position: absolute;
-        left: 48%;
-        top: 51%;
-        transform: translate(-50%, -50%);
         text-align: center;
+    }
+    .profile-sub-info{
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .change-password-button{
+        margin: 15px 0 15px 0;
+    }
+    .change-password-button button{
+        width: 90%;
+    }
+    .upload-pic-button{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+    .user-profile-card{
+        height: 400px;
     }
     .user-profile{
-        position: absolute;
-        left: 48%;
-        top: 58%;
-        transform: translate(-50%, -50%);
+        margin: 0 auto;
         text-align: center;
     }
-    .file-upload{
-        position: absolute;
-        left: 52%;
-        top: 67%;
-        transform: translate(-50%, -50%);
+    .user-profile-sub-info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
     }
 }
 .logout-button{
