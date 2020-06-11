@@ -132,63 +132,6 @@ html{
 .search-icon{
     margin-left: 30px;
 }
-@media screen and (max-device-width: 480px) and (orientation: portrait){
-    .search-icon{
-        margin-left: 30px;
-    }
-    .auth-card{
-        height: 480px;
-    }
-    .profile-card{
-        height: 450px;
-    }
-    .profile-card-plate{
-        display: grid;
-    }
-    .profile-pic-plate, .profile-info{
-        margin: 0 auto;
-    }
-    .profile-info{
-        text-align: center;
-    }
-    .profile-sub-info{
-        display: flex;
-        justify-content: space-between;
-        width: 90%;
-        margin: 0 auto;
-    }
-    .change-password-button{
-        margin: 15px 0 15px 0;
-    }
-    .change-password-button button{
-        width: 90%;
-    }
-    .upload-pic-button{
-        display: flex;
-        justify-content: center;
-        width: 100%;
-        margin: 0 auto;
-        padding: 0 auto;
-    }
-    .user-profile-card{
-        height: 400px;
-    }
-    .user-profile{
-        margin: 0 auto;
-        text-align: center;
-    }
-    .user-profile-sub-info{
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        margin: 0 auto;
-    }
-    #toast-container {
-        top: 50% !important;
-        right: 50% !important;
-        transform: translateX(40%) translateY(5%) !important;
-    }
-}
 .logout-button{
     margin-left: 30px;
 }
@@ -269,6 +212,71 @@ input[type=text]:focus {
     cursor: pointer;
     font-size: 35px;
     margin: 0;
+}
+@media screen and (max-device-width: 480px) and (orientation: portrait){
+    .search-icon{
+        margin-left: 30px;
+    }
+    .auth-card{
+        height: 480px;
+    }
+    .profile-card{
+        height: 450px;
+    }
+    .profile-card-plate{
+        display: grid;
+    }
+    .profile-pic-plate, .profile-info{
+        margin: 0 auto;
+    }
+    .profile-info{
+        text-align: center;
+    }
+    .profile-sub-info{
+        display: flex;
+        justify-content: space-between;
+        width: 90%;
+        margin: 0 auto;
+    }
+    .change-password-button{
+        margin: 15px 0 15px 0;
+    }
+    .change-password-button button{
+        width: 90%;
+    }
+    .upload-pic-button{
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin: 0 auto;
+        padding: 0 auto;
+    }
+    .user-profile-card{
+        height: 400px;
+    }
+    .user-profile{
+        margin: 0 auto;
+        text-align: center;
+    }
+    .user-profile-sub-info{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        margin: 0 auto;
+    }
+    .comment-icon{
+        position: absolute;
+        left: 33%;
+        color: #5e35b1 !important;
+        cursor: pointer;
+        font-size: 35px;
+        margin: 0;
+    }
+    #toast-container {
+        top: 50% !important;
+        right: 50% !important;
+        transform: translateX(40%) translateY(5%) !important;
+    }
 }
 /* Materialize Style */
 #toast-container{
