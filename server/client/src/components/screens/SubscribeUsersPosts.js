@@ -1,13 +1,17 @@
-import React,{useState, useEffect, useContext} from 'react';
+import React,{useState, useEffect, useContext, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import M from 'materialize-css';
 
 import {UserContext} from './../../App';
 
 const SubscribeUsersPost = () => {
+    const commentsModal = useRef(null);
+
     const [data, setData] = useState([]);
+    const [comments, setComments] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     useEffect(()=>{
+        M.Modal.init(commentsModal.current);
         fetch('/subpost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -146,28 +150,55 @@ const SubscribeUsersPost = () => {
                                 {
                                     item.likes.includes(state._id) 
                                     ? 
-                                    <i className="material-icons love-icon"
+                                    <span className="love-icon-plate">
+                                        <i className="material-icons love-icon"
                                         onClick={()=>{
                                             unlikePost(item._id)
                                         }}
-                                    >favorite</i>
+                                        >favorite</i>
+                                        &nbsp;liked
+                                    </span>
                                     : 
-                                    <i className="material-icons love-icon-unlike"
+                                    <span className="love-icon-plate">
+                                        <i className="material-icons love-icon-unlike"
                                         onClick={()=>{
                                             likePost(item._id)
                                         }}
-                                    >favorite_border</i>
+                                        >favorite_border</i>
+                                    </span>
+                                    
                                 }
-                                <h6>{item.likes.length} likes</h6>
-                                <h6>{item.title}</h6>
-                                <p>{item.body}</p>
-                                {
-                                    item.comments.map(record=>{
-                                        return(
-                                            <h6 key={record._id}><span style={{fontWeight:"500"}}>{record.postedBy.name}</span> {record.text}</h6>
-                                        );
-                                    })
-                                }
+                                <span className="comment-icon-plate">
+                                    <i className="material-icons comment-icon modal-trigger"
+                                        data-target="comments-modal"  
+                                        onClick={()=>{
+                                            setComments(item.comments)
+                                        }}
+                                    >comment</i>
+                                </span>
+                                <h6 style={{color: "#5e35b1"}}><b>{item.likes.length} likes</b></h6>
+                                <h6 style={{color: "#5e35b1"}}><b>{item.title}</b></h6>
+                                <p>{item.body}</p><br/>
+                                <span className="modal-trigger" data-target="comments-modal"
+                                    style={{
+                                        color: "#5e35b1",
+                                        cursor: "pointer",
+                                        fontWeight: "500"
+                                    }}
+                                    onClick={()=>{
+                                        setComments(item.comments)
+                                    }}
+                                >{item.comments.length > 1 ? <p>view all {item.comments.length} comments</p>: ""}</span>
+                                <span className="modal-trigger" data-target="comments-modal"
+                                    style={{
+                                        color: "#5e35b1",
+                                        cursor: "pointer",
+                                        fontWeight: "500"
+                                    }}
+                                    onClick={()=>{
+                                        setComments(item.comments)
+                                    }}
+                                >{item.comments.length === 1 ? <p>view {item.comments.length} comment</p>: ""}</span>
                                 <form
                                     onSubmit={(e)=>{
                                         e.preventDefault();
@@ -182,6 +213,25 @@ const SubscribeUsersPost = () => {
                     );
                 })
             }
+            <div id="comments-modal" className="modal bottom-sheet" ref={commentsModal} style={{color: "#5e35b1"}}>
+                <div className="modal-content container">
+                    <h5 style={{borderBottom: "2px solid #5e35b1", paddingBottom: "15px"}}>Comments</h5>
+                    {
+                        comments.map(record=>{
+                            return(
+                                <h6 key={record._id} style={{color: "#d500f9"}}><span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name} : </span>&nbsp;&nbsp;{record.text}</h6>
+                            );
+                        })
+                    }
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-close waves-effect waves-green btn-flat" 
+                        onClick={()=>{
+                            setComments([]);
+                        }}
+                    >Close</button>
+                </div>
+            </div>
         </div>
     );
 }
