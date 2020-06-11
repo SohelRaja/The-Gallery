@@ -10,7 +10,7 @@ export default class MyPost extends Component{
             return post;
         }
     })
-    console.log(postData)
+    // console.log(postData)
     return (
         <div className="home">
             <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
@@ -23,23 +23,29 @@ export default class MyPost extends Component{
                 </div>
             </nav>
             <div className="card home-card" key={postData._id}>
-                <div className="home-card-heading">
+                <div style={{
+                    padding: "2px",
+                }}>
                     <div>
-                        <h4 className="home-card-title">
+                        <h5 style={{margin: "5px", marginLeft: "10px", color: "#5e35b1"}} className="home-card-title truncate">
                             {postData.title} {postData.privacy==="private"? <span className="btn-large btn-floating #5e35b1 deep-purple darken-1 my-post-lock"><i className="material-icons">lock</i></span>:""}
-                        </h4>
+                        </h5>
                     </div>
                 </div>
                 <div className="card-image">
                     <img src={postData.photo} alt={postData.title} />
                 </div>
                 <div className="card-content">
-                    <h6><b>{postData.likes.length} likes </b></h6>
-                    <h5>{postData.body}</h5>
+                    <span style={{ color: "#e535b1"}}><b>{postData.likes.length} likes </b></span><span style={{ color: "#5e35b1", fontWeight: "700"}}>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</span>
+                    <span style={{ color: "#5e35b1"}}><b>{postData.comments.length} comments </b></span>
+                    <h5 className="truncate" style={{ color: "#5e35b1", borderBottom: "1px solid #5e35b1", paddingBottom: "20px"}}>{postData.body}</h5>
+                    <h5 style={{ color: "#5e35b1"}}>Comments</h5>
                     {
                         postData.comments.map(record=>{
                             return(
-                                <h6 key={record._id}><span style={{fontWeight:"500"}}>{record.postedBy.name}</span> {record.text}</h6>
+                                <p>
+                                    <h6 key={record._id} style={{color: '#e535b1'}}><span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name}</span>: &nbsp;{record.text}</h6>
+                                </p>
                             );
                         })
                     }

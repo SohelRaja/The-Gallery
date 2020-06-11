@@ -89,6 +89,7 @@ html{
     width: 140px;
     height: 140px;
     border-radius: 70px;
+    border: 2px solid #5e35b1;
 }
 .profile-sub-info{
     display: flex;

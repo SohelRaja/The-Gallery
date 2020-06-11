@@ -177,8 +177,8 @@ const Home = () => {
                                     >comment</i>
                                 </span>
                                 <h6 style={{color: "#5e35b1"}}><b>{item.likes.length} likes</b></h6>
-                                <h6 style={{color: "#5e35b1"}}><b>{item.title}</b></h6>
-                                <p>{item.body}</p><br/>
+                                <h6 className="truncate" style={{color: "#5e35b1"}}><b>{item.title}</b></h6>
+                                <p className="truncate">{item.body}</p><br/>
                                 <span className="modal-trigger" data-target="comments-modal"
                                     style={{
                                         color: "#5e35b1",
