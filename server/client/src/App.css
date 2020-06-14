@@ -96,6 +96,18 @@ html{
     justify-content: space-between;
     width: 108%;
 }
+.user-profile-card{
+    height: 210px;
+}
+.user-profile{
+    margin: 0 auto;
+    text-align: center;
+}
+.user-profile-sub-info{
+    display: flex;
+    justify-content: space-between;
+    width: 108%;
+}
 .profile-gallery{
     display: flex;
     flex-wrap: wrap;
@@ -284,4 +296,38 @@ input[type=text]:focus {
     right: 30px !important;
     left: auto !important;
     text-align: center;
+}
+/* Loader */
+.loader{
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+}
+.loader-image{
+    height: 6rem;
+    width: 6rem;
+}
+/* Not found page */
+.box-layout{
+    background: url('/bg.jpg');
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+}
+.box-layout-box{
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 3px;
+    text-align: center;
+    width: 22rem;
+    padding: 3.2rem 1.6rem;
+}
+.box-layout-title{
+    margin: 0 0 0.8rem 0;
+    line-height: 1;
 }

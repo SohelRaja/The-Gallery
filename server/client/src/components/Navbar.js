@@ -67,7 +67,7 @@ const NavBar = () => {
             {
                 user ? 
                 <Link className="sidenav-trigger right" data-target="mobile-menu">
-                    <i className="material-icons">dehaze</i>
+                    <i className="material-icons">menu</i>
                 </Link> : ""
             }
             <ul id="nav-mobile" className="right hide-on-med-and-down">
@@ -106,7 +106,7 @@ const NavBar = () => {
                         onChange={(e)=>fetchUsers(e.target.value)}
                     />
                     <ul className="collection">
-                        {
+                        {   userDetails ?
                             userDetails.map(item=>{
                             return <Link to={item._id === state._id ? "/profile" : `/profile/${item._id}`}
                                 onClick={()=>{
@@ -114,8 +114,8 @@ const NavBar = () => {
                                     setSearch('');
                                     setUserDetails([]);
                                 }}
-                            ><li key={item._id} className="collection-item">{item.email} -> <b>{item.name}</b></li></Link>
-                            })
+                            ><li key={item._id} className="collection-item">{item.email} : <b>{item.name}</b></li></Link>
+                            }) : ""
                         }
                     </ul>
                 </div>

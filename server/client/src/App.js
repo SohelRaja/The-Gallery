@@ -1,5 +1,5 @@
 import React, {useEffect, createContext, useReducer, useContext} from 'react';
-import {BrowserRouter, Route, Switch, useHistory} from 'react-router-dom';
+import {HashRouter, Route, Switch, useHistory, Redirect} from 'react-router-dom';
 import 'materialize-css/dist/css/materialize.min.css';
 
 import './App.css';
@@ -13,6 +13,7 @@ import CreatePost from './components/screens/CreatePost';
 import EditPost from './components/screens/EditPost';
 import MyPost from './components/screens/MyPost';
 import SubscribeUsersPost from './components/screens/SubscribeUsersPosts';
+import NotFoundPage from './components/screens/NotFoundPage';
 import {reducer, initialState} from './reducers/userReducer';
 
 export const UserContext = createContext();
@@ -30,35 +31,52 @@ const Routing = ()=>{
   },[history,dispatch]);
   return(
     <Switch>
-      <Route path="/" exact>
-        <Home />
-      </Route>
-      <Route path="/signin">
-        <Signin />
-      </Route>
-      <Route path="/signup">
-        <Signup />
-      </Route>
-      <Route path="/profile" exact>
-        <Profile />
-      </Route>
-      <Route path="/create">
-        <CreatePost />
-      </Route>
-      <Route path="/editpost/:postId">
-        <EditPost />
-      </Route>
-      <Route path="/profile/:userId">
-        <UserProfile />
-      </Route>
-      <Route path="/subscriberspost">
-        <SubscribeUsersPost />
-      </Route>
-      <Route exact
-      path="/mypost/:id"
-      component={MyPost}
-      >
-      </Route>
+      {state && 
+        <Route path="/" exact>
+          <Home />
+        </Route>
+      }
+      {!state && 
+        <Switch>
+          <Route path="/signin">
+            <Signin />
+          </Route>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+      }
+      {state ? 
+        <Switch>
+          <Route path="/profile" exact>
+            <Profile />
+          </Route>
+          <Route path="/create">
+            <CreatePost />
+          </Route>
+          <Route path="/editpost/:postId">
+            <EditPost />
+          </Route>
+          <Route path="/profile/:userId">
+            <UserProfile />
+          </Route>
+          <Route path="/subscriberspost">
+            <SubscribeUsersPost />
+          </Route>
+          <Route exact
+          path="/mypost/:id"
+          component={MyPost}
+          >
+          </Route>
+          <Route>
+            <NotFoundPage />
+          </Route>
+        </Switch>
+        : <Redirect to='/signin' />
+      }  
     </Switch>
   );
 }
@@ -68,10 +86,10 @@ function App() {
   return (
     <div className="App">
       <UserContext.Provider value={{state:state, dispatch:dispatch}}>
-        <BrowserRouter>
+        <HashRouter>
           <NavBar />
           <Routing />
-        </BrowserRouter>
+        </HashRouter>
       </UserContext.Provider>
     </div>
   );

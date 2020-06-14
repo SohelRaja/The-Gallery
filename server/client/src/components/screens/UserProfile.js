@@ -2,6 +2,7 @@ import React, {useEffect, useState, useContext} from 'react';
 import { useParams } from 'react-router-dom';
 
 import {UserContext} from '../../App';
+import LoadingPage from './LoadingPage';
 
 const UserProfile = () => {
     const [userProfile,setProfile] = useState(null);
@@ -77,7 +78,7 @@ const UserProfile = () => {
     }
     return (
     <>
-    {userProfile ? 
+    {userProfile && !userProfile.error ? 
         <div className="profile">
             <div className="user-profile-card profile-card-plate" style={{borderBottom:"2px solid #5e35b1"}}>
                 <div className="profile-pic-plate">
@@ -129,7 +130,7 @@ const UserProfile = () => {
                 }
             </div>
         </div>
-    : <h2>loading...</h2>
+    : <LoadingPage />
     }
     </>
     );

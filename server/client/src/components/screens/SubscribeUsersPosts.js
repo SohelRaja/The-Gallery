@@ -219,7 +219,12 @@ const SubscribeUsersPost = () => {
                     {
                         comments.map(record=>{
                             return(
-                                <h6 key={record._id} style={{color: "#d500f9"}}><span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name} : </span>&nbsp;&nbsp;{record.text}</h6>
+                                <h6 key={record._id} style={{color: "#d500f9"}}>
+                                    <Link to={record.postedBy._id === state._id ? "/profile" : `/profile/${record.postedBy._id}`}>
+                                        <span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name} : </span>
+                                    </Link>
+                                    &nbsp;&nbsp;{record.text}
+                                </h6>
                             );
                         })
                     }

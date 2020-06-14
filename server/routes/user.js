@@ -106,6 +106,9 @@ router.put('/changepassword', requireLogin, (req,res)=>{
 });
 
 router.post('/search-users',requireLogin, (req,res)=>{
+    if(!req.body.query){
+        return res.json({});
+    }
     let userPattern = new RegExp("^"+req.body.query);
     User.find({email: {$regex: userPattern}})
     .select("_id email name")
