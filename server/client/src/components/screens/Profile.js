@@ -14,6 +14,7 @@ const Profile = () => {
     const [image,setImage] = useState("");
     const [name,setName] = useState("");
     const [password,setPassword] = useState("");
+    const [prevPassword,setPrevPassword] = useState("");
     useEffect(()=>{
         M.Modal.init(editNameModal.current);
         M.Modal.init(changePasswordModal.current);
@@ -102,6 +103,7 @@ const Profile = () => {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
+                prev: prevPassword,
                 password
             })
         }).then(res=>res.json())
@@ -291,6 +293,12 @@ const Profile = () => {
                     <h4>Change Password</h4>
                     <input 
                         type='text'
+                        placeholder="Enter your previous password"
+                        value={prevPassword}
+                        onChange={(e)=>setPrevPassword(e.target.value)}
+                    />
+                    <input 
+                        type='text'
                         placeholder="Enter your new password"
                         value={password}
                         onChange={(e)=>setPassword(e.target.value)}
@@ -300,6 +308,7 @@ const Profile = () => {
                     <button className="modal-close waves-effect waves-green btn-flat" 
                         onClick={()=>{
                             setPassword("");
+                            setPrevPassword("");
                         }}
                     >Close</button>
                    <button className="waves-effect waves-green btn-flat" 
@@ -307,6 +316,7 @@ const Profile = () => {
                         changePassword();
                         M.Modal.getInstance(changePasswordModal.current).close();
                         setPassword("");
+                        setPrevPassword("");
                     }}
                    >Change Password</button>
                 </div>

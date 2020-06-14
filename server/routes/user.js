@@ -91,17 +91,33 @@ router.put('/updatename', requireLogin, (req,res)=>{
 });
 router.put('/changepassword', requireLogin, (req,res)=>{
     const password = req.body.password;
-    bcrypt.hash(password, 11)
-    .then((hashedPassword)=>{
-        User.findByIdAndUpdate(req.user._id, {$set: {password: hashedPassword}},{new: true}, 
-            (err,result)=>{
-            if(err){
-                return res.status(422).json({error: "Unable to update password!"});
+    const prevPassword = req.body.prev;
+    User.findById(req.user._id)
+    .then((savedUser)=>{
+        bcrypt.compare(prevPassword, savedUser.password)
+        .then((doMatch)=>{
+            if(doMatch){
+                bcrypt.hash(password, 11)
+                .then((hashedPassword)=>{
+                    User.findByIdAndUpdate(req.user._id, {$set: {password: hashedPassword}},{new: true}, 
+                        (err,result)=>{
+                        if(err){
+                            return res.status(422).json({error: "Unable to update password!"});
+                        }
+                        res.json({
+                            message: "Password changed!"
+                        })
+                    })
+                })
+            }else{
+                return res.status(422).json({
+                    error: "Unable to update password!"
+                });
             }
-            res.json({
-                message: "Password changed!."
-            })
         })
+        .catch((err)=>{
+            console.log(err);
+        });
     })
 });
 
