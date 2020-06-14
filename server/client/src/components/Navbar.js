@@ -63,7 +63,13 @@ const NavBar = () => {
     return (
         <nav className="white mynavbar">
             <div className="nav-wrapper container">
-            <Link to={state ? "/":"/signin"} className="brand-logo left">The Gallery</Link>
+            <Link to={state ? "/":"/signin"} className="brand-logo left">
+                <img src="theGallery.png" style={{
+                    height: "45px",
+                    position: "absolute",
+                    top: ".5rem"
+                }}/>
+            </Link>
             {
                 user ? 
                 <Link className="sidenav-trigger right" data-target="mobile-menu">

@@ -25,6 +25,7 @@ html{
 }
 .auth-card h2{
     color: #5e35b1;
+    font-family: 'Ruthie', cursive;
 }
 .auth-card-signin{
     padding: 20px;
@@ -35,6 +36,7 @@ html{
 }
 .auth-card-signin h2{
     color: #5e35b1;
+    font-family: 'Ruthie', cursive;
 }
 .input-field input[type=text]:focus {
     border-bottom: 1px solid #5e35b1 !important;
