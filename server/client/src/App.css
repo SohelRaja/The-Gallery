@@ -64,6 +64,7 @@ html{
 }
 .post-card h2{
     color: #5e35b1;
+    font-family: 'Ruthie', cursive;
 }
 .privacy-button{
     display: flex;
@@ -221,11 +222,36 @@ input[type=text]:focus {
 }
 .comment-icon{
     position: absolute;
-    left: 25%;
+    left: 30%;
     color: #5e35b1 !important;
     cursor: pointer;
     font-size: 35px;
     margin: 0;
+}
+.update-pic{
+    width: 40px;
+    height: 20px;
+    top: -50px;
+    left: 75px;
+}
+.add-post-plate{
+    width: 200px;
+    height: 35px;
+    border: 2px solid #5e35b1;
+    border-radius: 10px;
+    margin: 10px auto;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5e35b1;
+    font-weight: 600;
+}
+.add-post-plate a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #5e35b1;
 }
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{

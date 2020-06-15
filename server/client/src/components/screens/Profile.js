@@ -189,6 +189,15 @@ const Profile = () => {
                 <div className="profile-card-plate">
                     <div className="profile-pic-plate">
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
+                        <div className="file-upload file-field input-field update-pic" style={{margin: "10px"}}>
+                            <div className="btn-floating #5e35b1 deep-purple darken-1 upload-pic-button">
+                                <i class="material-icons">photo_camera</i>
+                                <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
+                            </div>
+                            <div className="file-path-wrapper">
+                                <input className="file-path validate" type="text" />
+                            </div>
+                        </div>
                     </div>
                     <div className="profile-info">
                         <h5 style={{color:"#5e35b1"}}>{state? state.name : "loading..."} <i style={{color: "#6a1b9a"}} data-target="edit-name-modal" className="material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>edit</i></h5>
@@ -205,24 +214,9 @@ const Profile = () => {
                                 className="btn waves-effect waves-light #5e35b1 deep-purple darken-1 modal-trigger"
                             >Change Password</button>
                         </div>
-                        <div className="hide-on-med-and-up file-upload file-field input-field" style={{margin: "10px"}}>
-                            <div className="btn #5e35b1 deep-purple darken-1 upload-pic-button">
-                                <span>Update Pic</span>
-                                <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
-                            </div>
-                            <div className="file-path-wrapper">
-                                <input className="file-path validate" type="text" />
-                            </div>
+                        <div className="add-post-plate">
+                            <Link to="/create"><i class="material-icons">add</i> <span>Add Post</span></Link>
                         </div>
-                    </div>
-                </div>
-                <div className="hide-on-small-only file-upload file-field input-field" style={{margin: "10px"}}>
-                    <div className="btn #5e35b1 deep-purple darken-1">
-                        <span>Update Pic</span>
-                        <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
-                    </div>
-                    <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
                     </div>
                 </div>
             </div>
