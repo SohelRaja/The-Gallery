@@ -53,7 +53,7 @@ const NavBar = () => {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
             },
             body: JSON.stringify({
-                query: query
+                query: query.trim().toLowerCase()
             })
         }).then(res=>res.json())
         .then(results=>{

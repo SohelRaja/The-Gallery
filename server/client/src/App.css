@@ -222,7 +222,7 @@ input[type=text]:focus {
 }
 .comment-icon{
     position: absolute;
-    left: 30%;
+    left: 31%;
     color: #5e35b1 !important;
     cursor: pointer;
     font-size: 35px;
@@ -230,7 +230,7 @@ input[type=text]:focus {
 }
 .update-pic{
     width: 40px;
-    height: 20px;
+    height: 1px;
     top: -50px;
     left: 75px;
 }
@@ -252,6 +252,7 @@ input[type=text]:focus {
     align-items: center;
     justify-content: center;
     color: #5e35b1;
+    width: 100%;
 }
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{
@@ -306,7 +307,7 @@ input[type=text]:focus {
     }
     .comment-icon{
         position: absolute;
-        left: 33%;
+        left: 31%;
         color: #5e35b1 !important;
         cursor: pointer;
         font-size: 35px;
@@ -315,7 +316,7 @@ input[type=text]:focus {
     #toast-container {
         top: 50% !important;
         right: 50% !important;
-        transform: translateX(40%) translateY(5%) !important;
+        transform: translateX(8.5%) translateY(5%) !important;
     }
 }
 /* Materialize Style */
