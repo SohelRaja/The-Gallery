@@ -8,6 +8,8 @@ import {UPLOAD_PRESET,CLOUD_NAME,BASE_URL} from '../../keys';
 const Profile = () => {
     const editNameModal = useRef(null);
     const changePasswordModal = useRef(null);
+    const deletePostModal = useRef(null);
+
     const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     const [url,setUrl] = useState(undefined);
@@ -15,9 +17,11 @@ const Profile = () => {
     const [name,setName] = useState("");
     const [password,setPassword] = useState("");
     const [prevPassword,setPrevPassword] = useState("");
+    const [deletePostInfo,setDeletePostInfo] = useState([]);
     useEffect(()=>{
         M.Modal.init(editNameModal.current);
         M.Modal.init(changePasswordModal.current);
+        M.Modal.init(deletePostModal.current);
         fetch('/mypost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -192,7 +196,7 @@ const Profile = () => {
                         <div className="file-upload file-field input-field update-pic" style={{margin: "10px"}}>
                             <div className="btn-floating #5e35b1 deep-purple darken-1 upload-pic-button">
                                 <i class="material-icons">photo_camera</i>
-                                <input type="file" onChange={(e)=>updatePhoto(e.target.files[0])} />
+                                <input type="file" accept='image/*' onChange={(e)=>updatePhoto(e.target.files[0])} />
                             </div>
                             <div className="file-path-wrapper">
                                 <input className="file-path validate" type="text" />
@@ -241,8 +245,9 @@ const Profile = () => {
                                         :<span className="btn-floating profile-lock waves-effect waves-light #ffffff white"
                                             onClick={()=>makePrivate(item._id)}
                                         ><i className="material-icons">lock_open</i></span>}
-                                        <span className="btn-floating halfway-fab waves-effect waves-light profile-delete"
-                                            onClick={()=>deletePost(item._id)}
+                                        <span className="btn-floating halfway-fab waves-effect waves-light profile-delete modal-trigger"
+                                            data-target="delete-post-modal"
+                                            onClick={()=>setDeletePostInfo(item)}
                                         ><i className="material-icons">delete</i></span>
                                         <Link to={`/editpost/${item._id}`}><span className="btn-floating halfway-fab waves-effect waves-light #5e35b1 deep-purple darken-1"><i className="material-icons">edit</i></span></Link>
                                     </div>
@@ -313,6 +318,26 @@ const Profile = () => {
                         setPrevPassword("");
                     }}
                    >Change Password</button>
+                </div>
+            </div>
+            <div id="delete-post-modal" className="modal" ref={deletePostModal} style={{color: "#5e35b1"}}>
+                <div className="modal-content">
+                    <h4>Delete Post</h4>
+                    <h6 className="truncate">Do want to delete <b>{deletePostInfo.title}</b> ?</h6>
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-close waves-effect waves-green btn-flat" 
+                        onClick={()=>{
+                            setDeletePostInfo([]);
+                        }}
+                    >Close</button>
+                   <button className="waves-effect waves-green btn-flat" 
+                    onClick={()=>{
+                        deletePost(deletePostInfo._id);
+                        setDeletePostInfo([]);
+                        M.Modal.getInstance(deletePostModal.current).close();
+                    }}
+                   >Delete</button>
                 </div>
             </div>
         </div>

@@ -6,12 +6,15 @@ import {UserContext} from './../../App';
 
 const Home = () => {
     const commentsModal = useRef(null);
+    const deletePostModal = useRef(null);
 
     const [data, setData] = useState([]);
     const [comments, setComments] = useState([]);
+    const [deletePostInfo,setDeletePostInfo] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     useEffect(()=>{
         M.Modal.init(commentsModal.current);
+        M.Modal.init(deletePostModal.current);
         fetch('/allpost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -136,8 +139,9 @@ const Home = () => {
                                     <h5 className="home-card-title">
                                         <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
                                         {item.postedBy._id === state._id &&
-                                            <i className="material-icons delete-icon"
-                                                onClick={()=>deletePost(item._id)}
+                                            <i className="material-icons delete-icon modal-trigger"
+                                                data-target="delete-post-modal"
+                                                onClick={()=>setDeletePostInfo(item)}
                                             >delete</i>
                                         }
                                     </h5>
@@ -235,6 +239,26 @@ const Home = () => {
                             setComments([]);
                         }}
                     >Close</button>
+                </div>
+            </div>
+            <div id="delete-post-modal" className="modal" ref={deletePostModal} style={{color: "#5e35b1"}}>
+                <div className="modal-content">
+                    <h4>Delete Post</h4>
+                    <h6 className="truncate">Do want to delete <b>{deletePostInfo.title}</b> ?</h6>
+                </div>
+                <div className="modal-footer">
+                    <button className="modal-close waves-effect waves-green btn-flat" 
+                        onClick={()=>{
+                            setDeletePostInfo([]);
+                        }}
+                    >Close</button>
+                   <button className="waves-effect waves-green btn-flat" 
+                    onClick={()=>{
+                        deletePost(deletePostInfo._id);
+                        setDeletePostInfo([]);
+                        M.Modal.getInstance(deletePostModal.current).close();
+                    }}
+                   >Delete</button>
                 </div>
             </div>
         </div>

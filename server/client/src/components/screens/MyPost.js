@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 
 export default class MyPost extends Component{
     render(){
@@ -8,17 +8,19 @@ export default class MyPost extends Component{
     const postData = posts.find(post=>{
         if(post._id === postDataId){
             return post;
+        }else {
+            return <Redirect to='/profile' />;
         }
     })
     // console.log(postData)
     return (
         <div className="home">
             <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
-                <div class="nav-wrapper container">
-                <div class="col s12">
-                    <Link to="/" class="breadcrumb">The Gallery</Link>
-                    <Link to="/profile" class="breadcrumb">Profile</Link>
-                    <Link class="breadcrumb">{postData.title.length > 10 ? postData.title.substring(0,10):postData.title.substring(0,postData.title.length)}{postData.title.length > 10?"...":""}</Link>
+                <div className="nav-wrapper container">
+                <div className="col s12">
+                    <Link to="/" className="breadcrumb">The Gallery</Link>
+                    <Link to="/profile" className="breadcrumb">Profile</Link>
+                    <Link className="breadcrumb">{postData.title.length > 10 ? postData.title.substring(0,10):postData.title.substring(0,postData.title.length)}{postData.title.length > 10?"...":""}</Link>
                 </div>
                 </div>
             </nav>

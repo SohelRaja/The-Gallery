@@ -78,7 +78,7 @@ router.put('/updatename', requireLogin, (req,res)=>{
     }
     if(name.length > 20 || name.length < 4){
         return res.status(422).json({
-            error: "Name must be within 4 to 20 charecters."
+            error: "Name must be within 4 to 20 characters."
         });
     }
     User.findByIdAndUpdate(req.user._id, {$set: {name: name}},{new: true}, 

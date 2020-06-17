@@ -93,7 +93,7 @@ const Signup = () => {
                 <div className="file-field input-field">
                     <div className="btn #5e35b1 deep-purple darken-1">
                         <span>Upload Pic</span>
-                        <input type="file" onChange={(e)=>setImage(e.target.files[0])} />
+                        <input type="file" accept='image/*' onChange={(e)=>setImage(e.target.files[0])} />
                     </div>
                     <div className="file-path-wrapper">
                         <input className="file-path validate" type="text" />
