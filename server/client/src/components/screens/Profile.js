@@ -195,7 +195,7 @@ const Profile = () => {
                         <img className="profile-pic" src={state? state.pic: "loading.."} alt="profile-pic"/>
                         <div className="file-upload file-field input-field update-pic" style={{margin: "10px"}}>
                             <div className="btn-floating #5e35b1 deep-purple darken-1 upload-pic-button">
-                                <i class="material-icons">photo_camera</i>
+                                <i className="material-icons">photo_camera</i>
                                 <input type="file" accept='image/*' onChange={(e)=>updatePhoto(e.target.files[0])} />
                             </div>
                             <div className="file-path-wrapper">
@@ -219,7 +219,7 @@ const Profile = () => {
                             >Change Password</button>
                         </div>
                         <div className="add-post-plate">
-                            <Link to="/create"><i class="material-icons">add</i> <span>Add Post</span></Link>
+                            <Link to="/create"><i className="material-icons">add</i> <span>Add Post</span></Link>
                         </div>
                     </div>
                 </div>

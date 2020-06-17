@@ -8,11 +8,12 @@ export default class MyPost extends Component{
     const postData = posts.find(post=>{
         if(post._id === postDataId){
             return post;
-        }else {
-            return <Redirect to='/profile' />;
         }
     })
     // console.log(postData)
+    if (postData === undefined){
+        return <Redirect to='/profile' />
+    }
     return (
         <div className="home">
             <nav className="myBreadcrumb container #5e35b1 deep-purple darken-1">
@@ -28,11 +29,6 @@ export default class MyPost extends Component{
                 <div style={{
                     padding: "2px",
                 }}>
-                    <div>
-                        <h5 style={{margin: "5px", marginLeft: "10px", color: "#5e35b1"}} className="home-card-title truncate">
-                            {postData.title} {postData.privacy==="private"? <span className="btn-large btn-floating #5e35b1 deep-purple darken-1 my-post-lock"><i className="material-icons">lock</i></span>:""}
-                        </h5>
-                    </div>
                 </div>
                 <div className="card-image">
                     <img src={postData.photo} alt={postData.title} />
@@ -41,7 +37,7 @@ export default class MyPost extends Component{
                     <span style={{ color: "#e535b1"}}><b>{postData.likes.length} likes </b></span><span style={{ color: "#5e35b1", fontWeight: "700"}}>&nbsp;&nbsp;&nbsp;~&nbsp;&nbsp;&nbsp;</span>
                     <span style={{ color: "#5e35b1"}}><b>{postData.comments.length} comments </b></span>
                     <h5 className="truncate" style={{ color: "#5e35b1", borderBottom: "1px solid #5e35b1", paddingBottom: "20px"}}>{postData.body}</h5>
-                    <h5 style={{ color: "#5e35b1"}}>Comments</h5>
+                    {postData.comments.length > 0 && <h5 style={{ color: "#5e35b1"}}>Comments</h5>}
                     {
                         postData.comments.map(record=>{
                             return(
