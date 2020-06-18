@@ -254,6 +254,13 @@ input[type=text]:focus {
     color: #5e35b1;
     width: 100%;
 }
+.comment-plate{
+    display: flex;
+    align-items: center;
+}
+.comment-plate-delete-icon{
+    color: #e53935;
+}
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{
         margin-left: 30px;

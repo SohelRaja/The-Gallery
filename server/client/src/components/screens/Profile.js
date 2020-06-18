@@ -323,7 +323,7 @@ const Profile = () => {
             <div id="delete-post-modal" className="modal" ref={deletePostModal} style={{color: "#5e35b1"}}>
                 <div className="modal-content">
                     <h4>Delete Post</h4>
-                    <h6 className="truncate">Do want to delete <b>{deletePostInfo.title}</b> ?</h6>
+                    <h6 className="truncate">Do you want to delete <b>{deletePostInfo.title}</b> ?</h6>
                 </div>
                 <div className="modal-footer">
                     <button className="modal-close waves-effect waves-green btn-flat" 

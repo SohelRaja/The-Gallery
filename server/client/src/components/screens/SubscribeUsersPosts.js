@@ -9,6 +9,7 @@ const SubscribeUsersPost = () => {
 
     const [data, setData] = useState([]);
     const [comments, setComments] = useState([]);
+    const [post, setPost] = useState("");
     const {state, dispatch} = useContext(UserContext);
     useEffect(()=>{
         M.Modal.init(commentsModal.current);
@@ -106,6 +107,28 @@ const SubscribeUsersPost = () => {
             M.toast({html: "Enter a valid comment", classes: "#f44336 red"});
         }
     }
+    const deletePostComment = (postId, commentId, authorId)=>{
+        fetch(`/deletecomment/${postId}/${commentId}/${authorId}`,{
+            method: "delete",
+            headers: {
+                "Authorization": "Bearer " + localStorage.getItem("jwt") 
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+            // console.log(result)
+            setComments(result.comments);
+            setPost(result);
+            const newData = data.map(item=>{
+                if(item._id === result._id){
+                    return result;
+                }else{
+                    return item;
+                }
+            })
+            setData(newData);
+            M.toast({html: "Successfully comment deleted", classes: "#ab47bc purple lighten-1"});
+        })
+    }
     const deletePost = (postId)=>{
         fetch(`/deletepost/${postId}`,{
             method: "delete",
@@ -173,6 +196,7 @@ const SubscribeUsersPost = () => {
                                         data-target="comments-modal"  
                                         onClick={()=>{
                                             setComments(item.comments)
+                                            setPost(item)
                                         }}
                                     >comment</i>
                                 </span>
@@ -187,6 +211,7 @@ const SubscribeUsersPost = () => {
                                     }}
                                     onClick={()=>{
                                         setComments(item.comments)
+                                        setPost(item)
                                     }}
                                 >{item.comments.length > 1 ? <p>view all {item.comments.length} comments</p>: ""}</span>
                                 <span className="modal-trigger" data-target="comments-modal"
@@ -197,8 +222,9 @@ const SubscribeUsersPost = () => {
                                     }}
                                     onClick={()=>{
                                         setComments(item.comments)
+                                        setPost(item)
                                     }}
-                                >{item.comments.length === 1 ? <p>view {item.comments.length} comment</p>: ""}</span>
+                                >{item.comments.length === 1 ? <p>view comment</p>: ""}</span>
                                 <form
                                     onSubmit={(e)=>{
                                         e.preventDefault();
@@ -219,11 +245,21 @@ const SubscribeUsersPost = () => {
                     {
                         comments.map(record=>{
                             return(
-                                <h6 key={record._id} style={{color: "#d500f9"}}>
+                                <h6 key={record._id} style={{color: "#d500f9"}} className="comment-plate">
                                     <Link to={record.postedBy._id === state._id ? "/profile" : `/profile/${record.postedBy._id}`}>
                                         <span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name} : </span>
                                     </Link>
-                                    &nbsp;&nbsp;{record.text}
+                                    &nbsp;&nbsp;{record.text}&nbsp;&nbsp;&nbsp;
+                                    {
+                                        record.postedBy._id === state._id || post.postedBy._id === state._id 
+                                        ?
+                                        <i className="material-icons comment-plate-delete-icon"
+                                            onClick={()=>{
+                                                deletePostComment(post._id, record._id, record.postedBy._id);
+                                            }}
+                                        >delete</i>
+                                        : ""
+                                    } 
                                 </h6>
                             );
                         })

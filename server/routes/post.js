@@ -147,6 +147,36 @@ router.put('/comment',requireLogin,(req,res)=>{
         }
     })
 });
+router.delete('/deletecomment/:postId/:commentId/:authorId',requireLogin,(req,res)=>{
+    Post.findById(req.params.postId)
+    .populate("postedBy","_id name pic")
+    .populate("comments.postedBy","_id")
+    .exec((err,post)=>{
+        if(err || !post){
+            return res.status(422).json({error:err})
+        }
+        if(post.postedBy._id.toString() === req.user._id.toString() || req.params.authorId === req.user._id.toString()){
+            var comments = post.comments.filter(item=>{
+            if(req.params.commentId !== item._id.toString()){
+                return item
+            }
+            })
+            Post.findByIdAndUpdate(req.params.postId,{
+                comments: comments
+            },{
+                new: true
+            }).populate("postedBy","_id name pic")
+            .populate("comments.postedBy","_id name pic")
+            .exec((err,result)=>{
+                if(err){
+                    return res.status(422).json({error:err});
+                }else{
+                    res.json(result);
+                }
+            })
+        }
+    })
+})
 router.put('/makepublic',requireLogin,(req,res)=>{
     Post.findByIdAndUpdate(req.body.postId,{
         privacy: "public"
