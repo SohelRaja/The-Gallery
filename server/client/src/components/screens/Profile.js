@@ -206,6 +206,7 @@ const Profile = () => {
                     <div className="profile-info">
                         <h5 style={{color:"#5e35b1"}}>{state? state.name : "loading..."} <i style={{color: "#6a1b9a"}} data-target="edit-name-modal" className="material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>edit</i></h5>
                         <h6 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
+                        {state && (state.priority === "owner" || state.priority === "admin") && <span className="priority-tag"><Link to="/admin">You are the {state.priority}&nbsp;&nbsp;<i className="material-icons link-priority-tag">insert_link</i></Link></span>}
                         <div className="profile-sub-info">
                             <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>

@@ -14,6 +14,7 @@ import EditPost from './components/screens/EditPost';
 import MyPost from './components/screens/MyPost';
 import SubscribeUsersPost from './components/screens/SubscribeUsersPosts';
 import NotFoundPage from './components/screens/NotFoundPage';
+import AdminPage from './components/screens/Admin';
 import {reducer, initialState} from './reducers/userReducer';
 
 export const UserContext = createContext();
@@ -21,8 +22,9 @@ export const UserContext = createContext();
 const Routing = ()=>{
   const history = useHistory();
   const {state, dispatch} = useContext(UserContext);
+  const user = JSON.parse(localStorage.getItem("user"));
   useEffect(()=>{
-    const user = JSON.parse(localStorage.getItem("user"));
+    
     if(user){
       dispatch({type:"USER", payload: user});
     }else{
@@ -49,6 +51,12 @@ const Routing = ()=>{
           </Route>
         </Switch>
       }
+      {
+        state && (user.priority === "owner" || user.priority === "admin") &&
+        <Route path="/admin">
+            <AdminPage />
+        </Route>
+      }
       {state ? 
         <Switch>
           <Route path="/profile" exact>
@@ -67,8 +75,8 @@ const Routing = ()=>{
             <SubscribeUsersPost />
           </Route>
           <Route exact
-          path="/mypost/:id"
-          component={MyPost}
+            path="/mypost/:id"
+            component={MyPost}
           >
           </Route>
           <Route>

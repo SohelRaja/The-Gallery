@@ -261,6 +261,44 @@ input[type=text]:focus {
 .comment-plate-delete-icon{
     color: #e53935;
 }
+.priority-tag{
+    padding: 2px 35px 2px 15px;
+    text-align: center;
+    border: 1px solid #D4AF37;
+    border-radius: 3px;
+    color: #D4AF37;
+    background-color: #EEE8AA;
+}
+.link-priority-tag{
+    position: absolute;
+}
+.priority-tag a{
+    color: #D4AF37;
+}
+/* Admin panel */
+.admin-user-plate a{
+    color: #5e35b1;
+}
+.admin-user-title a{
+    color: #5e35b1;
+}
+.admin-user-priority{
+    padding: 3px 7px;
+    border: 1px solid #5e35b1;
+    border-radius: 2px;
+    background-color: #fafafa;
+}
+.owner-badge{
+    position: relative;
+    padding: 8px 15px;
+    margin: 10px auto;
+    margin-top: 15px;
+    text-align: center;
+    border: 1px solid #D4AF37;
+    border-radius: 3px;
+    color: #D4AF37;
+    background-color: #EEE8AA;
+}
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{
         margin-left: 30px;

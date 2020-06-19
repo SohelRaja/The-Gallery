@@ -6,6 +6,27 @@ const requireLogin = require('../middlewares/requireLogin');
 const router = express.Router();
 const Post = mongoose.model('Post');
 
+router.get('/numberofposts', requireLogin, (req,res)=>{
+    Post.find()
+    .then((posts)=>{
+        var allPost = posts.length;
+        var pri = 0;
+        posts.map(item=>{
+            if(item.privacy === "private"){
+                pri = pri + 1;
+            }
+        })
+        var postData = {
+            allPost,
+            private: pri
+        }
+        res.json({posts: postData})
+    })
+    .catch((err)=>{
+        console.log(err);
+    })
+});
+
 router.get('/allpost', requireLogin, (req,res)=>{
     Post.find({privacy: "public"})
     .populate("postedBy", "_id name pic")

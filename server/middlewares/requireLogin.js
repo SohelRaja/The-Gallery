@@ -28,7 +28,8 @@ module.exports = (req,res,next)=>{
                 name: userData.name,
                 followers: userData.followers,
                 following: userData.following,
-                pic: userData.pic
+                pic: userData.pic,
+                priority: userData.priority
             }
             req.user = userData;
             next();

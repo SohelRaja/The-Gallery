@@ -100,8 +100,8 @@ router.post('/signin', (req,res)=>{
                 //     message: "Successfully signed in."
                 // });
                 const token = jwt.sign({_id: savedUser._id}, JWT_SECRET);
-                const {_id, name, email, followers, following, pic} = savedUser;
-                res.json({token: token, user: {_id, name, email, followers, following, pic}});
+                const {_id, name, email, followers, following, pic, priority} = savedUser;
+                res.json({token: token, user: {_id, name, email, followers, following, pic, priority}});
             }else{
                 return res.status(422).json({
                     error: "Invalid email or password."

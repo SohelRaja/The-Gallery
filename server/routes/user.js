@@ -8,6 +8,58 @@ const router = express.Router();
 const Post = mongoose.model('Post');
 const User = mongoose.model('User');
 
+router.get('/allusers',requireLogin,(req,res)=>{
+    if(req.user.priority === "admin" || req.user.priority === "owner"){
+        User.find()
+        .select("-password") // every things except password
+        .then((allusers)=>{
+            res.json({allusers})
+        })
+        .catch((err)=>{
+            console.log(err);
+        })
+    }else{
+        return res.status(422).json({error: "You don't have access to do."});
+    }
+    
+});
+
+router.put('/changetoadmin',requireLogin,(req,res)=>{
+    if(req.user.priority === "owner"){
+        User.findByIdAndUpdate(req.body.userId,{
+            priority: "admin"
+        },{
+            new: true
+        }).exec((err,result)=>{
+            if(err){
+                return res.status(422).json({error:err});
+            }else{
+                res.json(result);
+            }
+        })
+    }else{
+        return res.status(422).json({error: "You don't have access to do."});
+    }
+});
+
+router.put('/changetouser',requireLogin,(req,res)=>{
+    if(req.user.priority === "owner"){
+        User.findByIdAndUpdate(req.body.userId,{
+            priority: "normal"
+        },{
+            new: true
+        }).exec((err,result)=>{
+            if(err){
+                return res.status(422).json({error:err});
+            }else{
+                res.json(result);
+            }
+        })
+    }else{
+        return res.status(422).json({error: "You don't have access to do."});
+    }
+});
+
 router.get('/user/:userId',requireLogin,(req,res)=>{
     User.findOne({_id: req.params.userId})
     .select("-password") // every things except password
