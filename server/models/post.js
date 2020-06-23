@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    photopublicid: {
+        type: String,
+        required: true
+    },
     privacy: {
         type: String,
         required: true

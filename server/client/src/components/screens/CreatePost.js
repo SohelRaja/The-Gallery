@@ -2,8 +2,6 @@ import React, {useState, useEffect} from 'react';
 import {useHistory, Link} from 'react-router-dom';
 import M from 'materialize-css';
 
-import {UPLOAD_PRESET, CLOUD_NAME, BASE_URL} from '../../keys';
-
 const CreatePost = () =>{
     const history = useHistory();
     const [title, setTitle] = useState("");
@@ -44,23 +42,11 @@ const CreatePost = () =>{
     },[url,title,body,image,privacy,history]);
 
     const postDetails = () =>{
-        const data = new FormData();
-        data.append("file",image);
-        data.append("upload_preset",UPLOAD_PRESET);
-        data.append("cloud_name", CLOUD_NAME);
-        // Request To Cloudinary
-        fetch(BASE_URL, {
-            method: "post",
-            body: data
-        })
-        .then(res=>res.json())
-        .then(data => {
-            setUrl(data.url);
-            // console.log(data.url)
-        })
-        .catch(err=>{
-            console.log(err);
-        });
+        const reader = new FileReader();
+        reader.readAsDataURL(image);
+        reader.onloadend = () =>{
+            setUrl(reader.result);
+        }
     }
     return (
         <div>

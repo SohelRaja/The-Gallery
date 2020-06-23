@@ -18,7 +18,7 @@ html{
 }
 .auth-card{
     padding: 20px;
-    height: 500px;
+    height: 420px;
     max-width: 400px;
     text-align: center;
     margin: 10px auto;
@@ -304,7 +304,7 @@ input[type=text]:focus {
         margin-left: 30px;
     }
     .auth-card{
-        height: 480px;
+        height: 430px;
     }
     .profile-card{
         height: 450px;

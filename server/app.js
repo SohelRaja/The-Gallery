@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
 
 const {MONGOURI} = require('./config/keys');
 
@@ -23,7 +24,8 @@ require('./models/user');
 require('./models/post');
 
 // registering the routes
-app.use(express.json());
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 app.use(require('./routes/auth'));
 app.use(require('./routes/post'));
 app.use(require('./routes/user'));

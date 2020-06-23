@@ -1,6 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+// Cloudinary setup
+const cloudinary = require('cloudinary').v2;
+
+const {CLOUD_NAME_CLOUDINARY, API_KEY_CLOUDINARY, API_SECRET_CLOUDINARY} = require('./../config/keys');
+
+cloudinary.config({
+    cloud_name: CLOUD_NAME_CLOUDINARY,
+    api_key: API_KEY_CLOUDINARY,
+    api_secret: API_SECRET_CLOUDINARY
+});
 
 const requireLogin = require('../middlewares/requireLogin');
 
@@ -111,14 +121,47 @@ router.put('/unfollow',requireLogin,(req,res)=>{
     })
 })
 
-router.put('/updatepic', requireLogin, (req,res)=>{
-    User.findByIdAndUpdate(req.user._id, {$set: {pic: req.body.pic}},{new: true}, 
-        (err,result)=>{
-        if(err){
-            return res.status(422).json({error: "Unable to update profile pic!"});
-        }
-        res.json(result);
-    })
+router.put('/updatepic', requireLogin, async (req,res)=>{
+    const pic = req.body.pic;
+    if(!pic){
+        return res.status(422).json({error: "Please provide a picture!"});
+    }
+    try{
+        const picUploadedResponse = await cloudinary.uploader.upload(pic, {
+            upload_preset: "the-gallery"
+        });
+        const picUrl = picUploadedResponse.url;
+        const imagePublicId = picUploadedResponse.public_id;
+        User.findById(req.user._id)
+        .exec((err,user)=>{
+            if(err || !user){
+                return res.status(422).json({error:err})
+            }
+            const picId = user.picid;
+            if(picId !== "undefined"){
+                cloudinary.uploader.destroy(picId, function(error,response) {
+                    if(error){
+                        return res.status(422).json({error: "Something went to wrong!"});
+                    }
+                })
+            }
+        });
+        // console.log(picUploadedResponse)
+        User.findByIdAndUpdate(req.user._id, {
+            $set: {pic: picUrl,picid: imagePublicId},
+        },{new: true}, 
+            (err,result)=>{
+            if(err){
+                return res.status(422).json({error: "Unable to update profile pic!"});
+            }
+            res.json(result);
+        })
+    }catch(err){
+        console.log(err)
+        return res.status(422).json({
+            error: "Something went wrong, try again!"
+        });
+    };
 });
 
 router.put('/updatename', requireLogin, (req,res)=>{

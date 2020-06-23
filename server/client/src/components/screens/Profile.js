@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import M from 'materialize-css';
 
 import {UserContext} from '../../App';
-import {UPLOAD_PRESET,CLOUD_NAME,BASE_URL} from '../../keys';
 
 const Profile = () => {
     const editNameModal = useRef(null);
@@ -13,7 +12,6 @@ const Profile = () => {
     const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
     const [url,setUrl] = useState(undefined);
-    const [image,setImage] = useState("");
     const [name,setName] = useState("");
     const [password,setPassword] = useState("");
     const [prevPassword,setPrevPassword] = useState("");
@@ -35,48 +33,35 @@ const Profile = () => {
         });
     },[]);
     useEffect(()=>{
-        if(image){
-            const data = new FormData();
-            data.append("file",image);
-            data.append("upload_preset",UPLOAD_PRESET);
-            data.append("cloud_name", CLOUD_NAME);
-            // Request To Cloudinary
-            fetch(BASE_URL, {
-                method: "post",
-                body: data
-            })
-            .then(res=>res.json())
-            .then(cloudData => {
-                setUrl(cloudData.url);
-                // console.log(cloudData.url)
-                // Update Request to Backend
-                fetch('/updatepic',{
-                    method: "put",
-                    headers: {
-                        "Content-Type": "application/json",
-                        "Authorization": "Bearer " + localStorage.getItem("jwt")
-                    },
-                    body: JSON.stringify({
-                        pic: cloudData.url
-                    })
-                }).then(res=>res.json())
-                .then(result=>{
-                    if(result.error){
-                        M.toast({html: result.error, classes: "#f44336 red"});
-                    }else{
-                        localStorage.setItem("user", JSON.stringify({...state, pic: result.pic}));
-                        dispatch({type:"UPDATEPIC", payload:{pic: result.pic}});
-                        M.toast({html: "Profile pic updated!", classes: "#ab47bc purple lighten-1"});
-                    }
+        if(url){
+            // Update Request to Backend
+            fetch('/updatepic',{
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("jwt")
+                },
+                body: JSON.stringify({
+                    pic: url
                 })
+            }).then(res=>res.json())
+            .then(result=>{
+                if(result.error){
+                    M.toast({html: result.error, classes: "#f44336 red"});
+                }else{
+                    localStorage.setItem("user", JSON.stringify({...state, pic: result.pic}));
+                    dispatch({type:"UPDATEPIC", payload:{pic: result.pic}});
+                    M.toast({html: "Profile pic updated!", classes: "#ab47bc purple lighten-1"});
+                }
             })
-            .catch(err=>{
-                console.log(err);
-            });
         }
-    },[image]);
+    },[url]);
     const updatePhoto = (file) => {
-        setImage(file)
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onloadend = () =>{
+            setUrl(reader.result);
+        }
     }
     const updateName = () => {
         fetch('/updatename',{

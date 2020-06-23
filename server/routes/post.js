@@ -1,6 +1,17 @@
 const express = require('express');
 const mongoose = require('mongoose');
 
+// Cloudinary setup
+const cloudinary = require('cloudinary').v2;
+
+const {CLOUD_NAME_CLOUDINARY, API_KEY_CLOUDINARY, API_SECRET_CLOUDINARY} = require('./../config/keys');
+
+cloudinary.config({
+    cloud_name: CLOUD_NAME_CLOUDINARY,
+    api_key: API_KEY_CLOUDINARY,
+    api_secret: API_SECRET_CLOUDINARY
+});
+
 const requireLogin = require('../middlewares/requireLogin');
 
 const router = express.Router();
@@ -53,7 +64,7 @@ router.get('/subpost', requireLogin, (req,res)=>{
     })
 });
 
-router.post('/createpost', requireLogin, (req,res)=>{
+router.post('/createpost', requireLogin, async (req,res)=>{
     const {title, body, pic, privacy} = req.body;
     // console.log(title, body, pic, privacy)
     if(!title || !body || !pic || !privacy){
@@ -61,21 +72,35 @@ router.post('/createpost', requireLogin, (req,res)=>{
             error: "Please add all the fields."
         });
     }
-    const post = new Post({
-        title,
-        body,
-        photo: pic,
-        privacy,
-        postedBy: req.user
-    });
-
-    post.save().then((result)=>{
-        res.json({
-            post: result
-        })
-    }).catch((err)=>{
-        console.log(err);
-    });
+    try{
+        const picUploadedResponse = await cloudinary.uploader.upload(pic, {
+            upload_preset: "the-gallery"
+        });
+        const picUrl = picUploadedResponse.url;
+        const imagePublicId = picUploadedResponse.public_id;
+        // console.log(picUploadedResponse)
+        const post = new Post({
+            title,
+            body,
+            photo: picUrl,
+            photopublicid: imagePublicId,
+            privacy,
+            postedBy: req.user
+        });
+    
+        post.save().then((result)=>{
+            res.json({
+                post: result
+            })
+        }).catch((err)=>{
+            console.log(err);
+        });
+    }catch(err){
+        console.log(err)
+        return res.status(422).json({
+            error: "Something went wrong, try again!"
+        });
+    };
 });
 router.get('/mypost', requireLogin, (req,res)=>{
     Post.find({postedBy: req.user._id})
@@ -224,6 +249,7 @@ router.put('/makeprivate',requireLogin,(req,res)=>{
         }
     })
 });
+
 router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
     Post.findById(req.params.postId)
     .populate("postedBy","_id")
@@ -232,12 +258,18 @@ router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
             return res.status(422).json({error:err})
         }
         if(post.postedBy._id.toString() === req.user._id.toString()){
-              post.delete()
-              .then(result=>{
-                  res.json(result)
-              }).catch(err=>{
-                  console.log(err)
-              })
+            cloudinary.uploader.destroy(post.photopublicid, function(error,response) {
+                if(error){
+                    return res.status(422).json({error})
+                }else{
+                    post.delete()
+                    .then(result=>{
+                        res.json(result)
+                    }).catch(err=>{
+                        console.log(err)
+                    })
+                }
+            });
         }
     })
 })
