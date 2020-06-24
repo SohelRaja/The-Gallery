@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {Link, useHistory} from 'react-router-dom';
 import M from 'materialize-css';
 
@@ -58,15 +58,6 @@ const Signup = () => {
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
                 />
-                {/* <div className="file-field input-field">
-                    <div className="btn #5e35b1 deep-purple darken-1">
-                        <span>Upload Pic</span>
-                        <input type="file" accept='image/*' onChange={(e)=>setImage(e.target.files[0])} />
-                    </div>
-                    <div className="file-path-wrapper">
-                        <input className="file-path validate" type="text" />
-                    </div>
-                </div> */}
                 <button 
                     className="btn waves-effect waves-light #5e35b1 deep-purple darken-1"
                     onClick={()=>PostData()}

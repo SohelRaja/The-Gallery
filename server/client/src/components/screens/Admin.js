@@ -1,5 +1,5 @@
-import React,{useState, useEffect, useContext, useRef} from 'react';
-import {Link, Redirect} from 'react-router-dom';
+import React,{useState, useEffect, useContext} from 'react';
+import {Link} from 'react-router-dom';
 import M from 'materialize-css';
 
 import {UserContext} from './../../App';
