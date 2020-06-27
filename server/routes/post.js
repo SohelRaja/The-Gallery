@@ -17,30 +17,30 @@ const requireLogin = require('../middlewares/requireLogin');
 const router = express.Router();
 const Post = mongoose.model('Post');
 
-router.get('/numberofposts', requireLogin, (req,res)=>{
-    Post.find()
-    .then((posts)=>{
-        var allPost = posts.length;
-        var pri = 0;
-        posts.map(item=>{
-            if(item.privacy === "private"){
-                pri = pri + 1;
-            }
-        })
-        var postData = {
-            allPost,
-            private: pri
-        }
-        res.json({posts: postData})
-    })
-    .catch((err)=>{
-        console.log(err);
-    })
-});
+// router.get('/numberofposts', requireLogin, (req,res)=>{
+//     Post.find()
+//     .then((posts)=>{
+//         var allPost = posts.length;
+//         var pri = 0;
+//         posts.map(item=>{
+//             if(item.privacy === "private"){
+//                 pri = pri + 1;
+//             }
+//         })
+//         var postData = {
+//             allPost,
+//             private: pri
+//         }
+//         res.json({posts: postData})
+//     })
+//     .catch((err)=>{
+//         console.log(err);
+//     })
+// });
 
 router.get('/allpost', requireLogin, (req,res)=>{
     Post.find({privacy: "public"})
-    .populate("postedBy", "_id name pic")
+    .populate("postedBy", "_id name pic priority")
     .populate("comments.postedBy", "_id name")
     .sort('-createdAt') //Descending Order '-createdAt'
     .then((posts)=>{
@@ -252,24 +252,30 @@ router.put('/makeprivate',requireLogin,(req,res)=>{
 
 router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
     Post.findById(req.params.postId)
-    .populate("postedBy","_id")
+    .populate("postedBy","_id priority")
     .exec((err,post)=>{
         if(err || !post){
             return res.status(422).json({error:err})
         }
-        if(post.postedBy._id.toString() === req.user._id.toString()){
-            cloudinary.uploader.destroy(post.photopublicid, function(error,response) {
-                if(error){
-                    return res.status(422).json({error})
-                }else{
-                    post.delete()
-                    .then(result=>{
-                        res.json(result)
-                    }).catch(err=>{
-                        console.log(err)
-                    })
-                }
-            });
+        if((post.postedBy._id.toString() === req.user._id.toString()) || (req.user.priority === "admin") || (req.user.priority === "owner")){
+            if((post.postedBy.priority === "normal") || (post.postedBy.priority === "admin") || (post.postedBy.priority === "owner" && req.user.priority === "owner")){
+                cloudinary.uploader.destroy(post.photopublicid, function(error,response) {
+                    if(error){
+                        return res.status(422).json({error})
+                    }else{
+                        post.delete()
+                        .then(result=>{
+                            res.json(result)
+                        }).catch(err=>{
+                            console.log(err)
+                        })
+                    }
+                });
+            }else{
+                return res.status(422).json({error:"You don't have access to do!"});
+            }
+        }else{
+            return res.status(422).json({error:"You don't have access to do!"});
         }
     })
 })

@@ -21,7 +21,7 @@ const NavBar = () => {
         if(state){
             return [
                 <li key="1"><i data-target="search-modal" className="large material-icons modal-trigger search-icon" style={{color: "#5e35b1", cursor: "pointer"}}>search</i></li>,
-                <li key="2"><Link to="/subscriberspost">Subcribers Post</Link></li>,
+                <li key="2"><Link to="/myfeed">My Feed</Link></li>,
                 <li key="3"><Link to="/profile">Profile</Link></li>,
                 <li key="4"><Link to="/create">Create post</Link></li>,
                 <li key="5">

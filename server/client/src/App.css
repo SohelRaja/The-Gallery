@@ -87,12 +87,19 @@ html{
 .profile-card-plate{
     display: flex;
     justify-content: space-around;
+    height: 280px;
+}
+.profile-pic-plate{
+    top: 100px;
 }
 .profile-pic{
     width: 140px;
     height: 140px;
     border-radius: 70px;
     border: 2px solid #5e35b1;
+}
+.profile-info{
+   text-align: center;
 }
 .profile-sub-info{
     display: flex;
@@ -289,15 +296,39 @@ input[type=text]:focus {
     background-color: #fafafa;
 }
 .owner-badge{
+    margin: 0;
     position: relative;
-    padding: 8px 15px;
-    margin: 10px auto;
-    margin-top: 15px;
+    padding: 6px 12px;
     text-align: center;
     border: 1px solid #D4AF37;
     border-radius: 3px;
     color: #D4AF37;
     background-color: #EEE8AA;
+}
+.admin-button{
+    margin: 0;
+    color: #fff !important;
+    background-color: #9575cd !important;
+    border-radius: 3px !important;
+}
+.admin-all-user-plate{
+    margin: 0;
+    margin-bottom: 40px;
+    background-color: #e1bee7;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
+}
+.number{
+    color: #5e35b1;
+}
+.admin-post-plate{
+    margin: 0;
+    margin-top: 40px;
+    background-color: #e1bee7;
+    width: 100%;
+    height: 200px;
+    padding: 10px;
 }
 @media screen and (max-device-width: 480px) and (orientation: portrait){
     .search-icon{
@@ -365,11 +396,13 @@ input[type=text]:focus {
     }
 }
 /* Materialize Style */
-#toast-container{
-    top: 30px !important;
-    right: 30px !important;
-    left: auto !important;
-    text-align: center;
+@media screen and (min-device-width: 480px){
+    #toast-container{
+        top: 30px !important;
+        right: 30px !important;
+        left: auto !important;
+        text-align: center;
+    }
 }
 /* Loader */
 .loader{

@@ -71,7 +71,7 @@ const Routing = ()=>{
           <Route path="/profile/:userId">
             <UserProfile />
           </Route>
-          <Route path="/subscriberspost">
+          <Route path="/myfeed">
             <SubscribeUsersPost />
           </Route>
           <Route exact
