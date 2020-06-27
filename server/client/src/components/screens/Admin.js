@@ -166,7 +166,7 @@ const Admin = () => {
                                 </div>
                                 <div className="admin-post-plate">
                                     <h5 className="white-text">
-                                        Total No. of Public Posts : <h3 className="number">{postData.length}</h3>
+                                        Total Public Posts : <h3 className="number">{postData.length}</h3>
                                     </h5>
                                     <button className="btn waves-effect waves-light admin-button"
                                         onClick={()=>{
