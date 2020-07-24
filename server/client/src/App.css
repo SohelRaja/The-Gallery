@@ -87,7 +87,7 @@ html{
 .profile-card-plate{
     display: flex;
     justify-content: space-around;
-    height: 280px;
+    height: 225px;
 }
 .profile-pic-plate{
     top: 100px;
@@ -99,12 +99,42 @@ html{
     border: 2px solid #5e35b1;
 }
 .profile-info{
-   text-align: center;
+    justify-content: center;
+    text-align: center;
+}
+.profile-info-profilename{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #5e35b1;
+}
+.profile-setting-tag{
+    margin-left: 10px;
+    font-size: x-large;
+}
+#profile-dropdown{
+    width: 200px !important;
+}
+.dropdown-content li span,.dropdown-content li a {
+    color: #5e35b1 !important;
 }
 .profile-sub-info{
     display: flex;
     justify-content: space-between;
-    width: 108%;
+    width: 110%;
+}
+.priority-tag{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 20px;
+    border: 1px solid #D4AF37;
+    border-radius: 3px;
+    color: #D4AF37;
+    background-color: #EEE8AA;
+}
+.priority-tag a{
+    color: #D4AF37;
 }
 .user-profile-card{
     height: 210px;
@@ -167,6 +197,9 @@ html{
     position: absolute !important;
     right: 24px !important;
     top: 20px !important;
+}
+.adminBreadcrumb{
+    margin: 20px 0px;
 }
 .myBreadcrumb{
     margin-top: 20px;
@@ -268,20 +301,6 @@ input[type=text]:focus {
 .comment-plate-delete-icon{
     color: #e53935;
 }
-.priority-tag{
-    padding: 2px 35px 2px 15px;
-    text-align: center;
-    border: 1px solid #D4AF37;
-    border-radius: 3px;
-    color: #D4AF37;
-    background-color: #EEE8AA;
-}
-.link-priority-tag{
-    position: absolute;
-}
-.priority-tag a{
-    color: #D4AF37;
-}
 /* Admin panel */
 .admin-user-plate a{
     color: #5e35b1;
@@ -294,6 +313,12 @@ input[type=text]:focus {
     border: 1px solid #5e35b1;
     border-radius: 2px;
     background-color: #fafafa;
+}
+.admin-fake-box{
+    padding: 3px 7px;
+    border: 1px solid transparent;
+    border-radius: 2px;
+    color: transparent;
 }
 .owner-badge{
     margin: 0;
@@ -338,7 +363,7 @@ input[type=text]:focus {
         height: 430px;
     }
     .profile-card{
-        height: 450px;
+        height: 430px;
     }
     .profile-card-plate{
         display: grid;
@@ -354,12 +379,6 @@ input[type=text]:focus {
         justify-content: space-between;
         width: 90%;
         margin: 0 auto;
-    }
-    .change-password-button{
-        margin: 15px 0 15px 0;
-    }
-    .change-password-button button{
-        width: 90%;
     }
     .upload-pic-button{
         display: flex;

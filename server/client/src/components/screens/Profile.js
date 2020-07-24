@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import M from 'materialize-css';
 
 import {UserContext} from '../../App';
@@ -8,6 +8,8 @@ const Profile = () => {
     const editNameModal = useRef(null);
     const changePasswordModal = useRef(null);
     const deletePostModal = useRef(null);
+    const profileDropdown = useRef(null);
+    const history = useHistory();
 
     const [myposts,setPosts] = useState([]);
     const {state, dispatch} = useContext(UserContext);
@@ -20,6 +22,8 @@ const Profile = () => {
         M.Modal.init(editNameModal.current);
         M.Modal.init(changePasswordModal.current);
         M.Modal.init(deletePostModal.current);
+        M.Dropdown.init(profileDropdown.current,{inDuration: 300, outDuration: 225});
+
         fetch('/mypost',{
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("jwt")
@@ -189,20 +193,27 @@ const Profile = () => {
                         </div>
                     </div>
                     <div className="profile-info">
-                        <h5 style={{color:"#5e35b1", marginLeft: "10px"}}>{state? state.name : "loading..."} <i style={{color: "#6a1b9a"}} data-target="edit-name-modal" className="material-icons modal-trigger" style={{color: "#5e35b1", cursor: "pointer"}}>edit</i></h5>
+                        <h5 className="profile-info-profilename">
+                            {state? state.name : "loading..."} 
+                            <i  
+                                ref={profileDropdown}
+                                data-target='profile-dropdown'
+                                className="material-icons dropdown-trigger profile-setting-tag"
+                            >more_vert</i>
+                        </h5>
                         <h6 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
-                        {state && (state.priority === "owner" || state.priority === "admin") && <span className="priority-tag"><Link to="/admin">You are the {state.priority}&nbsp;&nbsp;<i className="material-icons link-priority-tag">insert_link</i></Link></span>}
+                        {   
+                            state && (state.priority === "owner" || state.priority === "admin") && 
+                            <h6 className="priority-tag">
+                                <Link to="/admin">
+                                    You are the {state.priority}
+                                </Link>
+                            </h6>
+                        }
                         <div className="profile-sub-info">
                             <h6><b style={{color: "#6a1b9a"}}>{myposts.length}</b> posts</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.followers.length : "0"}</b> followers</h6>
                             <h6><b style={{color: "#6a1b9a"}}>{state? state.following.length : "0"}</b> following</h6>
-                        </div>
-                        <div className="change-password-button">
-                            <button 
-                                style={{margin: "10px"}} 
-                                data-target="change-password-modal" 
-                                className="btn waves-effect waves-light #5e35b1 deep-purple darken-1 modal-trigger"
-                            >Change Password</button>
                         </div>
                         <div className="add-post-plate">
                             <Link to="/create"><i className="material-icons">add</i> <span>Add Post</span></Link>
@@ -325,6 +336,42 @@ const Profile = () => {
                     }}
                    >Delete</button>
                 </div>
+            </div>
+            <div>
+                <ul id='profile-dropdown' className='dropdown-content'>
+                    {
+                        state && (state.priority === "owner" || state.priority === "admin") && 
+                        <li key="0">
+                            <Link to="/admin"><i className="material-icons">ac_unit</i>Admin Panel</Link>
+                        </li>
+                    }
+                    <li key="1">
+                        <Link to="/create">Create Post</Link>
+                    </li>
+                    <li key="2">
+                        <span 
+                            data-target="edit-name-modal" 
+                            className="modal-trigger"
+                        >Change Profile Name</span>
+                    </li>
+                    <li key="4">
+                        <span 
+                            data-target="change-password-modal" 
+                            className="modal-trigger"
+                        >Change Password</span>
+                    </li>
+                    <li 
+                        key="5"
+                        onClick={()=>{
+                            localStorage.clear();
+                            dispatch({type: "CLEAR"});
+                            M.toast({html: "Successfully logged out.", classes: "#ab47bc purple lighten-1"});
+                            history.push('/signin');
+                        }}
+                    >
+                        <Link to='/signin'><i className="material-icons">exit_to_app</i>Log Out</Link>
+                    </li>
+                </ul>
             </div>
         </div>
     );

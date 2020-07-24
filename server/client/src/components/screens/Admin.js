@@ -147,6 +147,15 @@ const Admin = () => {
         <div>
             { data.error ? <NotFoundPage /> :
             <div className="container">
+                <nav className="adminBreadcrumb #9575cd deep-purple lighten-2">
+                    <div className="nav-wrapper container">
+                        <div className="col s12">
+                            <Link to="/" className="breadcrumb">The Gallery</Link>
+                            <Link to="/profile" className="breadcrumb">Profile</Link>
+                            <Link className="breadcrumb">Admin Panel</Link>
+                        </div>
+                    </div>
+                </nav>
                 <div className="col s12 m6 l6">
                     <div className="card-panel #9575cd deep-purple lighten-2 z-depth-1">
                         <div className="row valign-wrapper">
@@ -193,8 +202,24 @@ const Admin = () => {
                                 <div className="card-panel grey lighten-5 z-depth-1 admin-user-plate">
                                     <div className="row valign-wrapper">
                                         <Link to={item._id === state._id ? "/profile" : `/profile/${item._id}`} className="col s2">
-                                            <img src={item.pic} alt="" style={{height: "60px", width: "60px"}}/> 
-                                            {(item.priority === "owner" || item.priority === "admin")&&<b className="admin-user-priority">{(item.priority === "admin" && "Admin")||(item.priority === "owner" && "Owner")}</b>}
+                                            {
+                                                (item.priority === "owner" || item.priority === "admin") ?
+                                                    <div>
+                                                        <img src={item.pic} alt="" style={{height: "60px", width: "60px"}}/> 
+                                                        <b className="admin-user-priority">
+                                                            {(item.priority === "admin" && "Admin")||(item.priority === "owner" && "Owner")}
+                                                        </b>
+                                                    </div>
+                                                :
+                                                    <div>
+                                                        <img src={item.pic} alt="" style={{height: "60px", width: "60px"}}/> 
+                                                        <b className="admin-fake-box">
+                                                            User
+                                                        </b>
+                                                    </div>
+
+                                            }
+                                            
                                         </Link>
                                         <div className="col offset-s1 s10">
                                             <p className="black-text admin-user-title">
