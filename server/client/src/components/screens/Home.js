@@ -1,6 +1,7 @@
 import React,{useState, useEffect, useContext, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import M from 'materialize-css';
+import ReactTooltip from "react-tooltip";
 
 import {UserContext} from './../../App';
 
@@ -160,7 +161,14 @@ const Home = () => {
                                 </div>
                                 <div>
                                     <h5 className="home-card-title">
-                                        <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}>{item.postedBy.name}</Link>
+                                        <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}>
+                                            {item.postedBy.name}
+                                            {
+                                                (item.postedBy.priority === "owner" || item.postedBy.priority === "admin" || item.postedBy.priority === "special") && 
+                                                <i className="material-icons verified-acc-tag" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i>
+                                            }
+                                        </Link>
+                                        <ReactTooltip />
                                         {item.postedBy._id === state._id &&
                                             <i className="material-icons delete-icon modal-trigger"
                                                 data-target="delete-post-modal"
@@ -251,7 +259,17 @@ const Home = () => {
                             return(
                                 <h6 key={record._id} style={{color: "#d500f9"}} className="comment-plate">
                                     <Link to={record.postedBy._id === state._id ? "/profile" : `/profile/${record.postedBy._id}`}>
-                                        <span style={{fontWeight:"500", color: "#5e35b1"}}>{record.postedBy.name} : </span>
+                                        <span style={{fontWeight:"500", color: "#5e35b1"}}>
+                                            {record.postedBy.name}
+                                            {
+                                                (record.postedBy.priority === "owner" || record.postedBy.priority === "admin" || record.postedBy.priority === "special") && 
+                                                <i className="material-icons verified-acc-tag-sm" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i>
+                                            } : 
+                                        </span>
+                                        {
+                                            (record.postedBy.priority === "owner" || record.postedBy.priority === "admin" || record.postedBy.priority === "special") &&
+                                            <ReactTooltip />
+                                        }
                                     </Link>
                                     &nbsp;&nbsp;{record.text}&nbsp;&nbsp;&nbsp;
                                     {

@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useContext} from 'react';
 import { useParams } from 'react-router-dom';
+import ReactTooltip from "react-tooltip";
 
 import {UserContext} from '../../App';
 import LoadingPage from './LoadingPage';
@@ -85,7 +86,17 @@ const UserProfile = () => {
                     <img className="profile-pic" src={userProfile.user.pic} alt="profile-pic" />
                 </div>
                 <div className="user-profile">
-                    <h5 style={{color:"#5e35b1"}}>{userProfile.user.name}</h5>
+                    <h5 style={{color:"#5e35b1"}}>
+                        {userProfile.user.name}
+                        {
+                            userProfile && (userProfile.user.priority === "owner" || userProfile.user.priority === "admin" || userProfile.user.priority === "special") &&
+                            <i className="material-icons verified-acc-tag" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i> 
+                        }
+                        {
+                            userProfile && (userProfile.user.priority === "owner" || userProfile.user.priority === "admin" || userProfile.user.priority === "special") &&
+                            <ReactTooltip />
+                        }
+                    </h5>
                     <h6 style={{color:"#7e57c2"}}>{userProfile.user.email}</h6>
                     <div className="user-profile-sub-info">
                         <h6><b style={{color: "#6a1b9a"}}>{userProfile.posts.length}</b> posts&nbsp;&nbsp;&nbsp;</h6>

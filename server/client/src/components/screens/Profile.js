@@ -1,6 +1,7 @@
 import React, {useEffect, useState, useContext, useRef} from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import M from 'materialize-css';
+import ReactTooltip from "react-tooltip";
 
 import {UserContext} from '../../App';
 
@@ -194,12 +195,18 @@ const Profile = () => {
                     </div>
                     <div className="profile-info">
                         <h5 className="profile-info-profilename">
-                            {state? state.name : "loading..."} 
+                            {state? state.name : "loading..."}
+                            {
+                                state && (state.priority === "owner" || state.priority === "admin" || state.priority === "special") &&
+                                <i className="material-icons verified-acc-tag" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i> 
+                            }
                             <i  
                                 ref={profileDropdown}
                                 data-target='profile-dropdown'
                                 className="material-icons dropdown-trigger profile-setting-tag"
+                                data-tip="More" data-background-color="#5e35b1"
                             >more_vert</i>
+                            <ReactTooltip />
                         </h5>
                         <h6 style={{color:"#7e57c2"}}>{state? state.email : "loading..."}</h6>
                         {   

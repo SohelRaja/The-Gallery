@@ -222,7 +222,7 @@ router.post('/search-users',requireLogin, (req,res)=>{
     }
     let userPattern = new RegExp("^"+req.body.query);
     User.find({email: {$regex: userPattern}})
-    .select("_id email name")
+    .select("_id email name priority")
     .then(user=>{
         res.json({user});
     }).catch(err=>{

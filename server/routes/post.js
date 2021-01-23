@@ -41,7 +41,7 @@ const Post = mongoose.model('Post');
 router.get('/allpost', requireLogin, (req,res)=>{
     Post.find({privacy: "public"})
     .populate("postedBy", "_id name pic priority")
-    .populate("comments.postedBy", "_id name")
+    .populate("comments.postedBy", "_id name priority")
     .sort('-createdAt') //Descending Order '-createdAt'
     .then((posts)=>{
         res.json({posts})
@@ -53,8 +53,8 @@ router.get('/allpost', requireLogin, (req,res)=>{
 
 router.get('/subpost', requireLogin, (req,res)=>{
     Post.find({postedBy: {$in: req.user.following}, privacy: "public"})
-    .populate("postedBy", "_id name pic")
-    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name pic priority")
+    .populate("comments.postedBy", "_id name priority")
     .sort('-createdAt')
     .then((posts)=>{
         res.json({posts})

@@ -1,6 +1,7 @@
 import React,{useState, useEffect, useContext, useRef} from 'react';
 import {Link} from 'react-router-dom';
 import M from 'materialize-css';
+import ReactTooltip from "react-tooltip";
 
 import {UserContext} from './../../App';
 import NotFoundPage from './NotFoundPage';
@@ -152,7 +153,7 @@ const Admin = () => {
                         <div className="col s12">
                             <Link to="/" className="breadcrumb">The Gallery</Link>
                             <Link to="/profile" className="breadcrumb">Profile</Link>
-                            <Link className="breadcrumb">Admin Panel</Link>
+                            <Link className="breadcrumb">Admin</Link>
                         </div>
                     </div>
                 </nav>
@@ -223,8 +224,17 @@ const Admin = () => {
                                         </Link>
                                         <div className="col offset-s1 s10">
                                             <p className="black-text admin-user-title">
-                                                <Link to={item._id === state._id ? "/profile" : `/profile/${item._id}`}><b>{item.name}</b></Link>
+                                                <Link to={item._id === state._id ? "/profile" : `/profile/${item._id}`}>
+                                                    <b>
+                                                        {item.name}
+                                                        {
+                                                            (item.priority === "owner" || item.priority === "admin" || item.priority === "special") && 
+                                                            <i className="material-icons verified-acc-tag-sm" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i>
+                                                        }
+                                                    </b>
+                                                </Link>
                                             </p>
+                                            <ReactTooltip />
                                             <p className="black-text">
                                                 {item.email.length < 25 ? item.email : item.email.substring(0,24)}{item.email.length > 24 ? "..." : ""}
                                             </p>
@@ -259,7 +269,16 @@ const Admin = () => {
                                         </div>
                                         <div className="col offset-s1 s7">
                                             <p className="black-text admin-user-title truncate">
-                                                <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}><b>{item.postedBy.name}</b></Link>
+                                                <Link to={item.postedBy._id === state._id ? "/profile" : `/profile/${item.postedBy._id}`}>
+                                                    <b>
+                                                        {item.postedBy.name}
+                                                        {
+                                                            (item.postedBy.priority === "owner" || item.postedBy.priority === "admin" || item.postedBy.priority === "special") && 
+                                                            <i className="material-icons verified-acc-tag-sm" data-tip="Verified Account" data-background-color="#5e35b1">verified_user</i>
+                                                        }
+                                                    </b>
+                                                    <ReactTooltip />
+                                                </Link>
                                             </p>
                                             <p className="black-text truncate">
                                                 {item.title.length < 25 ? item.title : item.title.substring(0,24)}{item.title.length > 24 ? "..." : ""}
